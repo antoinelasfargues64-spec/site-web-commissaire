@@ -21,6 +21,10 @@
             --dark-bg: #0a0a0a;
         }
         
+        html, body {
+            overflow-x: hidden; /* Coupe la barre de défilement horizontale */
+        }
+
         body { 
             font-family: 'Inter', sans-serif; 
             background-color: var(--dark-bg); 
@@ -29,6 +33,10 @@
             linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
             background-size: 30px 30px;
         }
+
+        /* Couleur de sélection du texte */
+        ::selection { background-color: var(--racing-red); color: #ffffff; }
+        ::-moz-selection { background-color: var(--racing-red); color: #ffffff; }
 
         .font-racing { font-family: 'Teko', sans-serif; text-transform: uppercase; }
 
@@ -45,28 +53,28 @@
 <body class="antialiased min-h-screen flex flex-col">
 
     <!-- MENU DE NAVIGATION -->
-    <nav class="fixed top-0 w-full z-50 flex justify-end p-6 md:px-12 pointer-events-none">
-        <div class="flex gap-6 md:gap-8 pointer-events-auto bg-black bg-opacity-50 p-4 rounded-lg backdrop-blur-sm border border-gray-800">
-            <a href="index.html" class="nav-link text-white hover:text-red-500 font-racing text-xl md:text-2xl tracking-widest transition-colors uppercase">Accueil</a>
-            <a href="about.html" class="nav-link text-white hover:text-red-500 font-racing text-xl md:text-2xl tracking-widest transition-colors uppercase">À propos</a>
-            <a href="gallery.html" class="nav-link active text-white hover:text-red-500 font-racing text-xl md:text-2xl tracking-widest transition-colors uppercase">Galerie</a>
+    <nav class="fixed top-0 w-full z-50 flex justify-end p-4 md:p-6 md:px-12 pointer-events-none">
+        <div class="flex gap-4 md:gap-8 pointer-events-auto bg-black bg-opacity-50 p-3 md:p-4 rounded-lg backdrop-blur-sm border border-gray-800">
+            <a href="index.html" class="nav-link text-white hover:text-red-500 font-racing text-lg md:text-2xl tracking-widest transition-colors uppercase">Accueil</a>
+            <a href="about.html" class="nav-link text-white hover:text-red-500 font-racing text-lg md:text-2xl tracking-widest transition-colors uppercase">À propos</a>
+            <a href="gallery.html" class="nav-link active text-white hover:text-red-500 font-racing text-lg md:text-2xl tracking-widest transition-colors uppercase">Galerie</a>
         </div>
     </nav>
 
     <!-- LIGHTBOX (Visionneuse plein écran) -->
     <div id="lightbox" class="fixed inset-0 bg-black bg-opacity-95 z-[150] hidden flex-col justify-center items-center opacity-0 transition-opacity duration-300">
         <button onclick="fermerImage()" class="absolute top-6 right-6 text-gray-500 hover:text-white transition-colors focus:outline-none z-[160] p-2">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12" /></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 md:h-12 md:w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12" /></svg>
         </button>
-        <button onclick="event.stopPropagation(); naviguerImage(-1)" class="absolute left-2 md:left-8 text-white hover:text-red-600 transition-colors focus:outline-none z-[160] p-4 group">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 md:h-16 md:w-16 drop-shadow-2xl group-hover:-translate-x-2 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 19l-7-7 7-7" /></svg>
+        <button onclick="event.stopPropagation(); naviguerImage(-1)" class="absolute left-1 md:left-8 text-white hover:text-red-600 transition-colors focus:outline-none z-[160] p-2 md:p-4 group">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 md:h-16 md:w-16 drop-shadow-2xl group-hover:-translate-x-2 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 19l-7-7 7-7" /></svg>
         </button>
         
-        <img id="lightbox-img" src="" alt="Plein écran" class="hidden max-h-[90vh] max-w-[85vw] object-contain shadow-[0_0_50px_rgba(0,0,0,0.8)] border border-gray-900 transition-opacity duration-300">
-        <video id="lightbox-video" class="hidden max-h-[90vh] max-w-[85vw] object-contain shadow-[0_0_50px_rgba(0,0,0,0.8)] border border-gray-900" controls autoplay playsinline loop></video>
+        <img id="lightbox-img" src="" alt="Plein écran" class="hidden max-h-[90vh] max-w-[95vw] md:max-w-[85vw] object-contain shadow-[0_0_50px_rgba(0,0,0,0.8)] border border-gray-900 transition-opacity duration-300">
+        <video id="lightbox-video" class="hidden max-h-[90vh] max-w-[95vw] md:max-w-[85vw] object-contain shadow-[0_0_50px_rgba(0,0,0,0.8)] border border-gray-900" controls autoplay playsinline loop></video>
         
-        <button onclick="event.stopPropagation(); naviguerImage(1)" class="absolute right-2 md:right-8 text-white hover:text-red-600 transition-colors focus:outline-none z-[160] p-4 group">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 md:h-16 md:w-16 drop-shadow-2xl group-hover:translate-x-2 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7" /></svg>
+        <button onclick="event.stopPropagation(); naviguerImage(1)" class="absolute right-1 md:right-8 text-white hover:text-red-600 transition-colors focus:outline-none z-[160] p-2 md:p-4 group">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 md:h-16 md:w-16 drop-shadow-2xl group-hover:translate-x-2 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7" /></svg>
         </button>
     </div>
 
@@ -76,15 +84,15 @@
         <div class="w-full max-w-[1600px] flex flex-col items-center">
             
             <div class="mb-16 relative pt-12 text-center w-full">
-                <div class="text-[4rem] sm:text-[7rem] md:text-[9rem] font-bold text-gray-400 opacity-5 absolute top-0 left-1/2 -translate-x-1/2 -z-10 tracking-tighter select-none leading-none">SNAPSHOTS</div>
-                <h2 class="text-5xl md:text-6xl font-bold inline-block border-l-4 border-r-4 border-red-600 px-6 uppercase tracking-wider relative z-10 text-white font-racing">Galerie <span class="text-gray-500">Photos & Vidéos</span></h2>
+                <div class="text-[3rem] sm:text-[7rem] md:text-[9rem] lg:text-[9rem] font-bold text-gray-400 opacity-5 absolute top-0 left-1/2 -translate-x-1/2 -z-10 tracking-tighter select-none leading-none whitespace-nowrap">SNAPSHOTS</div>
+                <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold inline-block border-l-4 border-r-4 border-red-600 px-4 md:px-6 uppercase tracking-wider relative z-10 text-white font-racing">Galerie <span class="text-gray-500">Photos & Vidéos</span></h2>
             </div>
 
             <!-- GRILLE CENTRÉE SOUS LE TITRE -->
-            <div class="mx-auto w-fit columns-1 sm:columns-2 md:columns-3 lg:columns-4 xl:columns-5 gap-4 md:gap-6 masonry-grid text-center">
+            <div class="mx-auto w-full max-w-7xl columns-1 sm:columns-2 md:columns-3 lg:columns-4 xl:columns-5 gap-4 md:gap-6 masonry-grid text-center">
                 
                 <!-- Vidéo d'introduction -->
-                <div class="inline-block w-[280px] sm:w-[300px] break-inside-avoid mb-4 md:mb-6 bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container text-left" onclick="ouvrirMedia(this)">
+                <div class="inline-block w-full break-inside-avoid mb-4 md:mb-6 bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container text-left" onclick="ouvrirMedia(this)">
                     <video preload="metadata" poster="photos-albi/albi1.jpg" autoplay loop muted playsinline class="w-full h-auto object-cover media-element pointer-events-none group-hover:scale-105 transition-transform duration-700 ease-in-out">
                         <source src="photos-albi/albi4.mp4" type="video/mp4">
                     </video>
@@ -92,38 +100,44 @@
                 </div>
 
                 <!-- Photos -->
-                <div class="inline-block w-[280px] sm:w-[300px] break-inside-avoid mb-4 md:mb-6 bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container text-left" onclick="ouvrirMedia(this)">
+                <div class="inline-block w-full break-inside-avoid mb-4 md:mb-6 bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container text-left" onclick="ouvrirMedia(this)">
                     <img src="photos_commissaire/header 1.jpg" alt="Action piste" class="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out media-element">
                     <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
                 </div>
 
-                <div class="inline-block w-[280px] sm:w-[300px] break-inside-avoid mb-4 md:mb-6 bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container text-left" onclick="ouvrirMedia(this)">
+                <div class="inline-block w-full break-inside-avoid mb-4 md:mb-6 bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container text-left" onclick="ouvrirMedia(this)">
                     <img src="photos-albi/albi1.jpg" alt="Albi 1" class="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out media-element">
                     <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
                 </div>
 
-                <div class="inline-block w-[280px] sm:w-[300px] break-inside-avoid mb-4 md:mb-6 bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container text-left" onclick="ouvrirMedia(this)">
+                <div class="inline-block w-full break-inside-avoid mb-4 md:mb-6 bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container text-left" onclick="ouvrirMedia(this)">
                     <img src="photos_commissaire/header 2.jpg" alt="Drapeau bleu" class="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out media-element">
                     <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
                 </div>
 
-                <div class="inline-block w-[280px] sm:w-[300px] break-inside-avoid mb-4 md:mb-6 bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container text-left" onclick="ouvrirMedia(this)">
+                <div class="inline-block w-full break-inside-avoid mb-4 md:mb-6 bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container text-left" onclick="ouvrirMedia(this)">
                     <img src="photos-albi/albi2.jpg" alt="Albi 2" class="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out media-element">
                     <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
                 </div>
 
-                <div class="inline-block w-[280px] sm:w-[300px] break-inside-avoid mb-4 md:mb-6 bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container text-left" onclick="ouvrirMedia(this)">
+                <div class="inline-block w-full break-inside-avoid mb-4 md:mb-6 bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container text-left" onclick="ouvrirMedia(this)">
                     <img src="photos_commissaire/about.jpg" alt="En tenue" class="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out media-element">
                     <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
                 </div>
 
-                <div class="inline-block w-[280px] sm:w-[300px] break-inside-avoid mb-4 md:mb-6 bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container text-left" onclick="ouvrirMedia(this)">
+                <div class="inline-block w-full break-inside-avoid mb-4 md:mb-6 bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container text-left" onclick="ouvrirMedia(this)">
                     <img src="photos-albi/albi3.jpg" alt="Albi 3" class="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out media-element">
                     <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
                 </div>
                 
-                <div class="inline-block w-[280px] sm:w-[300px] break-inside-avoid mb-4 md:mb-6 bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container text-left" onclick="ouvrirMedia(this)">
+                <div class="inline-block w-full break-inside-avoid mb-4 md:mb-6 bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container text-left" onclick="ouvrirMedia(this)">
                     <img src="photos_commissaire/header 3.jpg" alt="Safety Car" class="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out media-element">
+                    <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
+                </div>
+                
+                <!-- Photo Moto intégrée -->
+                <div class="inline-block w-full break-inside-avoid mb-4 md:mb-6 bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container text-left" onclick="ouvrirMedia(this)">
+                    <img src="photos-motos/départ-fsbk.jpg" alt="Départ FSBK" class="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out media-element" onerror="this.style.display='none'">
                     <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
                 </div>
 
@@ -211,4 +225,4 @@
         }
     </script>
 </body>
-<!-- </html> -->
+</html>
