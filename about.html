@@ -11,10 +11,7 @@
         if (performance.getEntriesByType("navigation")[0] && performance.getEntriesByType("navigation")[0].type === "reload") {
             window.location.href = "index.html";
         } else {
-            // S'il ne s'agit pas d'un rafraîchissement, force simplement le retour en haut
-            if ('scrollRestoration' in history) {
-                history.scrollRestoration = 'manual';
-            }
+            if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
             window.scrollTo(0, 0);
         }
     </script>
@@ -33,6 +30,10 @@
             background-size: 30px 30px;
         }
 
+        /* Couleur de sélection du texte */
+        ::selection { background-color: var(--racing-red); color: #ffffff; }
+        ::-moz-selection { background-color: var(--racing-red); color: #ffffff; }
+
         .font-racing { font-family: 'Teko', sans-serif; text-transform: uppercase; }
         
         .tag-racing { transform: skewX(-10deg); display: inline-block; }
@@ -46,71 +47,66 @@
 <body class="antialiased min-h-screen flex flex-col">
 
     <!-- MENU DE NAVIGATION -->
-    <nav class="fixed top-0 w-full z-50 flex justify-end p-6 md:px-12 pointer-events-none">
-        <div class="flex gap-6 md:gap-8 pointer-events-auto bg-black bg-opacity-50 p-4 rounded-lg backdrop-blur-sm border border-gray-800">
-            <a href="index.html" class="nav-link text-white hover:text-red-500 font-racing text-xl md:text-2xl tracking-widest transition-colors uppercase">Accueil</a>
-            <a href="about.html" class="nav-link active text-white hover:text-red-500 font-racing text-xl md:text-2xl tracking-widest transition-colors uppercase">À propos</a>
-            <a href="gallery.html" class="nav-link text-white hover:text-red-500 font-racing text-xl md:text-2xl tracking-widest transition-colors uppercase">Galerie</a>
+    <nav class="fixed top-0 w-full z-50 flex justify-end p-4 md:p-6 md:px-12 pointer-events-none">
+        <div class="flex gap-4 md:gap-8 pointer-events-auto bg-black bg-opacity-50 p-3 md:p-4 rounded-lg backdrop-blur-sm border border-gray-800">
+            <a href="index.html" class="nav-link text-white hover:text-red-500 font-racing text-lg md:text-2xl tracking-widest transition-colors uppercase">Accueil</a>
+            <a href="about.html" class="nav-link active text-white hover:text-red-500 font-racing text-lg md:text-2xl tracking-widest transition-colors uppercase">À propos</a>
+            <a href="gallery.html" class="nav-link text-white hover:text-red-500 font-racing text-lg md:text-2xl tracking-widest transition-colors uppercase">Galerie</a>
         </div>
     </nav>
 
     <!-- SECTION À PROPOS -->
-    <section class="flex-grow flex items-center justify-center py-32 px-4 sm:px-8 max-w-5xl mx-auto w-full relative z-10">
+    <section class="flex-grow flex items-center justify-center py-32 px-4 sm:px-8 md:px-12 max-w-5xl mx-auto w-full relative z-10">
         
         <div class="w-full">
             <div class="mb-12 relative pt-12">
-                <div class="text-[5rem] sm:text-[7rem] md:text-[9rem] font-bold text-gray-400 opacity-5 absolute top-0 left-0 -z-10 tracking-tighter select-none leading-none">OFFICIEL</div>
-                <h2 class="text-5xl md:text-6xl font-bold border-l-4 border-red-600 pl-6 uppercase tracking-wider relative z-10 text-white font-racing">À propos <span class="text-gray-500">d'Antoine</span></h2>
+                <div class="text-[3rem] sm:text-[6rem] md:text-[8rem] lg:text-[9rem] font-bold text-gray-400 opacity-5 absolute top-0 left-0 -z-10 tracking-tighter select-none leading-none">OFFICIEL</div>
+                <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold border-l-4 border-red-600 pl-4 md:pl-6 uppercase tracking-wider relative z-10 text-white font-racing">À propos <span class="text-gray-500">d'Antoine</span></h2>
             </div>
 
             <!-- BLOC 1 : ORIGINE DE LA PASSION -->
-            <div class="grid grid-cols-1 md:grid-cols-12 gap-12 items-center mb-24">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-center mb-16 md:mb-24">
                 <!-- Zone Image Enfance (à gauche) -->
                 <div class="md:col-span-5 relative order-2 md:order-1">
                     <div class="aspect-[3/4] bg-[#161616] border border-gray-800 rounded-lg overflow-hidden relative shadow-[0_0_30px_rgba(0,0,0,0.8)]">
                         <img src="photos_commissaire/4_ans.jpg" alt="Antoine enfant - Passion Automobile" class="w-full h-full object-cover opacity-80 hover:opacity-100 transition-opacity" onerror="this.style.display='none'">
-                        
-                        <div class="absolute inset-0 flex flex-col items-center justify-center text-gray-600 -z-10">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 mb-4 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
-                            <span class="font-racing tracking-widest uppercase text-sm">Image 4 ans</span>
-                        </div>
                     </div>
-                    <div class="absolute -top-4 -left-4 w-24 h-24 border-t-4 border-l-4 border-red-600 -z-10"></div>
+                    <div class="absolute -top-4 -left-4 w-16 h-16 md:w-24 md:h-24 border-t-4 border-l-4 border-red-600 -z-10"></div>
                 </div>
 
                 <!-- Zone texte Histoire -->
-                <div class="md:col-span-7 space-y-6 text-gray-300 font-light leading-relaxed order-1 md:order-2">
-                    <h3 class="text-4xl font-bold text-white mb-2 font-racing tracking-wide uppercase">L'origine d'une passion</h3>
+                <div class="md:col-span-7 space-y-4 md:space-y-6 text-gray-300 font-light leading-relaxed order-1 md:order-2">
+                    <h3 class="text-3xl md:text-4xl font-bold text-white mb-2 font-racing tracking-wide uppercase">L'origine d'une passion</h3>
                     
-                    <p class="text-lg">
+                    <p class="text-base md:text-lg">
                         Tout a commencé ici, à Pau, à l'âge de 4 ans, lors de mon tout premier Grand Prix de Pau. C'est au cœur de cette effervescence et au plus près des moteurs que cette vocation pour le sport automobile est née.
                     </p>
-                    <p class="text-lg">
+                    <p class="text-base md:text-lg">
                         Un rendez-vous incontournable : j'y suis allé tous les ans, sans exception, jusqu'en 2019. Cette année-là, je suis passé de l'autre côté de la barrière pour devenir bénévole dans l'organisation. Une transition naturelle qui a transformé un attachement d'enfance en un engagement de terrain concret.
                     </p>
-                    <p class="text-lg">
+                    <p class="text-base md:text-lg">
                         À partir de 2020, mon attrait pour la compétition s'est naturellement élargi aux différents tracés de la région paloise, m'amenant à me rendre très régulièrement sur les circuits d'Arnos et de Nogaro pour y vivre l'intensité des week-ends de course en tant que spectateur.
                     </p>
-                    <p class="text-lg">
+                    <p class="text-base md:text-lg">
                         L'année 2022 a marqué une nouvelle étape décisive dans mon parcours, avec ma première participation au Grand Prix de Pau sous l'égide de la FIA, une expérience particulièrement formatrice vécue au rythme exigeant des championnats internationaux WTCR et ETCR.
                     </p>
                 </div>
             </div>
 
             <!-- BLOC 2 : PRÉSENTATION ACTUELLE (AUTO) -->
-            <div class="grid grid-cols-1 md:grid-cols-12 gap-12 items-center mb-24">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-center mb-16 md:mb-24">
                 <!-- Zone texte -->
-                <div class="md:col-span-7 space-y-6 text-gray-300 font-light leading-relaxed">
-                    <h3 class="text-4xl font-bold text-white mb-2 font-racing tracking-wide uppercase">Vivre la passion autrement</h3>
+                <div class="md:col-span-7 space-y-4 md:space-y-6 text-gray-300 font-light leading-relaxed">
+                    <h3 class="text-3xl md:text-4xl font-bold text-white mb-2 font-racing tracking-wide uppercase">Vivre la passion autrement</h3>
                     
-                    <p class="text-lg">
+                    <p class="text-base md:text-lg">
                         Passionné de sport automobile depuis toujours, j'officie en tant que <strong class="text-white">Commissaire de Piste</strong> sur les circuits de France. Mon rôle est d'assurer la sécurité des pilotes, du public et le bon déroulement des épreuves sur quatre roues.
                     </p>
-                    <p class="text-lg">
+                    <p class="text-base md:text-lg">
                         De l'adrénaline des départs en peloton à la gestion des incidents de course, chaque meeting exige <span class="text-red-500 font-bold">rigueur, réactivité et sang-froid</span>. J'ai eu l'opportunité d'intervenir sur des tracés mythiques et des compétitions variées : Grand Prix Camions, Tour Auto, Coupe de France des Circuits, etc.
                     </p>
-                    <div class="pt-4 flex flex-wrap gap-4">
-                        <span class="tag-racing bg-[#161616] px-4 py-2 border-b border-red-600"><span class="tag-racing-text text-sm text-white font-bold uppercase tracking-wider">Licence FFSA</span></span>
+                    <div class="pt-2 md:pt-4 flex flex-wrap gap-4">
+                        <span class="tag-racing bg-[#161616] px-4 py-2 border-b border-red-600"><span class="tag-racing-text text-xs md:text-sm text-white font-bold uppercase tracking-wider">Licence FFSA</span></span>
                     </div>
                 </div>
                 
@@ -118,44 +114,33 @@
                 <div class="md:col-span-5 relative">
                     <div class="aspect-[3/4] bg-[#161616] border border-gray-800 rounded-lg overflow-hidden relative shadow-[0_0_30px_rgba(0,0,0,0.8)]">
                         <img src="photos_commissaire/about.jpg" alt="Antoine - Commissaire de Piste Auto" class="w-full h-full object-cover opacity-80 hover:opacity-100 transition-opacity" onerror="this.style.display='none'">
-                        
-                        <div class="absolute inset-0 flex flex-col items-center justify-center text-gray-600 -z-10">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 mb-4 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
-                            <span class="font-racing tracking-widest uppercase text-sm">Votre Photo Ici</span>
-                        </div>
                     </div>
-                    <div class="absolute -bottom-4 -right-4 w-24 h-24 border-b-4 border-r-4 border-red-600 -z-10"></div>
+                    <div class="absolute -bottom-4 -right-4 w-16 h-16 md:w-24 md:h-24 border-b-4 border-r-4 border-red-600 -z-10"></div>
                 </div>
             </div>
 
             <!-- BLOC 3 : DÉCOUVERTE DU MONDE DE LA MOTO -->
-            <div class="grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-center">
                 <!-- Zone Image Moto (à gauche pour alterner) -->
                 <div class="md:col-span-5 relative order-2 md:order-1">
                     <div class="aspect-[3/4] bg-[#161616] border border-gray-800 rounded-lg overflow-hidden relative shadow-[0_0_30px_rgba(0,0,0,0.8)]">
-                        <!-- Photo intégrée depuis le dossier photos-motos -->
                         <img src="photos-motos/départ-fsbk.jpg" alt="Départ FSBK - Moto" class="w-full h-full object-cover opacity-80 hover:opacity-100 transition-opacity" onerror="this.style.display='none'">
-                        
-                        <div class="absolute inset-0 flex flex-col items-center justify-center text-gray-600 -z-10">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 mb-4 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
-                            <span class="font-racing tracking-widest uppercase text-sm">Photo Moto</span>
-                        </div>
                     </div>
-                    <div class="absolute -top-4 -left-4 w-24 h-24 border-t-4 border-l-4 border-red-600 -z-10"></div>
+                    <div class="absolute -top-4 -left-4 w-16 h-16 md:w-24 md:h-24 border-t-4 border-l-4 border-red-600 -z-10"></div>
                 </div>
 
                 <!-- Zone texte Moto -->
-                <div class="md:col-span-7 space-y-6 text-gray-300 font-light leading-relaxed order-1 md:order-2">
-                    <h3 class="text-4xl font-bold text-white mb-2 font-racing tracking-wide uppercase">L'appel du deux-roues : Une nouvelle dimension</h3>
+                <div class="md:col-span-7 space-y-4 md:space-y-6 text-gray-300 font-light leading-relaxed order-1 md:order-2">
+                    <h3 class="text-3xl md:text-4xl font-bold text-white mb-2 font-racing tracking-wide uppercase">L'appel du deux-roues</h3>
                     
-                    <p class="text-lg">
+                    <p class="text-base md:text-lg">
                         Si l'automobile a bercé mes premières années, c'est grâce aux réseaux sociaux que j'ai pu découvrir de plus près le monde fascinant des courses de motos. Passer du volant au guidon, c'est s'ouvrir à une toute autre approche de la compétition.
                     </p>
-                    <p class="text-lg">
+                    <p class="text-base md:text-lg">
                         Sur deux roues, la dynamique des trajectoires, la gestion des drapeaux et les types d'interventions en cas de chute diffèrent radicalement. Ce nouveau défi me permet d'élargir mon champ d'action sur la piste et de vivre l'adrénaline des sports mécaniques sous un angle inédit.
                     </p>
-                    <div class="pt-4 flex flex-wrap gap-4">
-                        <span class="tag-racing bg-[#161616] px-4 py-2 border-b border-red-600"><span class="tag-racing-text text-sm text-white font-bold uppercase tracking-wider">Licence FFM</span></span>
+                    <div class="pt-2 md:pt-4 flex flex-wrap gap-4">
+                        <span class="tag-racing bg-[#161616] px-4 py-2 border-b border-red-600"><span class="tag-racing-text text-xs md:text-sm text-white font-bold uppercase tracking-wider">Licence FFM</span></span>
                     </div>
                 </div>
             </div>
