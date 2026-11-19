@@ -18,7 +18,7 @@
             --panel-bg: #121212;
         }
         
-        html { scroll-behavior: smooth; }
+        html { scroll-behavior: smooth; overflow-x: hidden; }
 
         body { 
             font-family: 'Inter', sans-serif; 
@@ -30,7 +30,6 @@
             background-size: 30px 30px;
         }
 
-        /* Couleur de sélection du texte */
         ::selection { background-color: var(--racing-red); color: #ffffff; }
         ::-moz-selection { background-color: var(--racing-red); color: #ffffff; }
 
@@ -44,16 +43,8 @@
         .meeting-card { background: linear-gradient(145deg, #161616 0%, #0d0d0d 100%); border-left: 4px solid #333; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); }
         .meeting-card:hover { border-left-color: var(--racing-red); transform: translateX(10px); box-shadow: -10px 10px 30px rgba(0,0,0,0.8); }
 
-        /* Classes pour l'animation au défilement (Scroll Reveal) */
-        .reveal-left {
-            opacity: 0;
-            transform: translateX(-50px);
-            transition: opacity 0.8s cubic-bezier(0.25, 0.8, 0.25, 1), transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
-        }
-        .reveal-visible {
-            opacity: 1;
-            transform: translateX(0);
-        }
+        .reveal-left { opacity: 0; transform: translateX(-50px); transition: opacity 0.8s cubic-bezier(0.25, 0.8, 0.25, 1), transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1); }
+        .reveal-visible { opacity: 1; transform: translateX(0); }
 
         .tag-racing { transform: skewX(-10deg); display: inline-block; }
         .tag-racing-text { transform: skewX(10deg); display: inline-block; }
@@ -84,17 +75,25 @@
         .nav-link::after { content: ''; position: absolute; width: 0; height: 2px; bottom: -2px; left: 0; background-color: var(--racing-red); transition: width 0.3s; }
         .nav-link:hover::after, .nav-link.active::after { width: 100%; }
 
-        .media-container img, .media-container video { backface-visibility: hidden; transform: translateZ(0); }
+        .media-container img, .media-container video {
+            backface-visibility: hidden;
+            transform: translateZ(0);
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
     </style>
 </head>
 <body class="antialiased">
 
     <!-- MENU DE NAVIGATION -->
-    <nav class="fixed top-0 w-full z-50 flex justify-end p-4 md:p-6 md:px-12 pointer-events-none">
-        <div class="flex gap-4 md:gap-8 pointer-events-auto bg-black bg-opacity-50 p-3 md:p-4 rounded-lg backdrop-blur-sm border border-gray-800">
-            <a href="index.html" class="nav-link active text-white hover:text-red-500 font-racing text-lg md:text-2xl tracking-widest transition-colors uppercase">Accueil</a>
-            <a href="about.html" class="nav-link text-white hover:text-red-500 font-racing text-lg md:text-2xl tracking-widest transition-colors uppercase">À propos</a>
-            <a href="gallery.html" class="nav-link text-white hover:text-red-500 font-racing text-lg md:text-2xl tracking-widest transition-colors uppercase">Galerie</a>
+    <nav class="fixed top-0 w-full z-50 pointer-events-none">
+        <div class="max-w-7xl mx-auto w-full flex justify-end p-4 md:p-6 md:px-8">
+            <div class="flex gap-4 md:gap-8 pointer-events-auto bg-black bg-opacity-60 p-3 md:p-4 rounded-lg backdrop-blur-md border border-gray-800 shadow-xl">
+                <a href="index.html" class="nav-link active text-white hover:text-red-500 font-racing text-lg md:text-2xl tracking-widest transition-colors uppercase">Accueil</a>
+                <a href="about.html" class="nav-link text-white hover:text-red-500 font-racing text-lg md:text-2xl tracking-widest transition-colors uppercase">À propos</a>
+                <a href="gallery.html" class="nav-link text-white hover:text-red-500 font-racing text-lg md:text-2xl tracking-widest transition-colors uppercase">Galerie</a>
+            </div>
         </div>
     </nav>
 
@@ -115,7 +114,7 @@
         </button>
     </div>
 
-    <!-- OVERLAY POUR POP-UP MODALE (Clic à l'extérieur) -->
+    <!-- OVERLAY POUR POP-UP MODALE -->
     <div id="alert-overlay" class="fixed inset-0 bg-black bg-opacity-80 z-[90] hidden opacity-0 transition-opacity duration-300" onclick="fermerAlert()"></div>
 
     <!-- POP-UP MODALE -->
@@ -134,7 +133,7 @@
     </div>
 
     <!-- HERO SECTION -->
-    <header class="relative h-screen flex flex-col items-center justify-center overflow-hidden bg-black">
+    <header class="relative min-h-[100dvh] flex flex-col items-center justify-center overflow-hidden bg-black">
         <div id="hero-slider" class="absolute inset-0 z-0">
             <div class="hero-slide absolute inset-0 transition-opacity duration-1000 opacity-100" style="background-image: url('photos_commissaire/header 1.jpg');"></div>
             <div class="hero-slide absolute inset-0 transition-opacity duration-1000 opacity-0" style="background-image: url('photos_commissaire/header 2.jpg');"></div>
@@ -142,12 +141,12 @@
             <div class="absolute inset-0 bg-black bg-opacity-60"></div>
         </div>
         
-        <div class="z-20 text-center px-4 w-full flex flex-col items-center justify-center mt-12 md:mt-24">
-            <h1 class="font-racing font-bold leading-[0.85] tracking-wide mb-8 text-white drop-shadow-[0_10px_20px_rgba(0,0,0,0.8)] transform -skew-x-12">
-                <span class="block text-[6rem] sm:text-[9rem] md:text-[13rem] xl:text-[16rem]">ANTOINE</span> 
-                <span class="block text-[6rem] sm:text-[9rem] md:text-[13rem] xl:text-[16rem]">LASFARGUES</span>
+        <div class="z-20 text-center px-4 w-full flex flex-col items-center justify-center mt-12 md:mt-20">
+            <h1 class="font-racing font-bold leading-[0.85] tracking-wide mb-8 text-white drop-shadow-[0_10px_20px_rgba(0,0,0,0.8)] transform -skew-x-12 max-w-full">
+                <span class="block text-[clamp(4.2rem,15vw,15rem)]">ANTOINE</span> 
+                <span class="block text-[clamp(4.2rem,15vw,15rem)]">LASFARGUES</span>
             </h1>
-            <p class="text-white font-medium tracking-[0.3em] md:tracking-[0.5em] text-xs sm:text-sm md:text-lg uppercase drop-shadow-md">
+            <p class="text-white font-medium tracking-[0.2em] sm:tracking-[0.3em] md:tracking-[0.5em] text-xs sm:text-sm md:text-lg uppercase drop-shadow-md">
                 Commissaire de piste international FFSA & FFM
             </p>
         </div>
@@ -160,60 +159,64 @@
     </header>
 
     <!-- SECTION APERÇU GALERIE -->
-    <section id="gallery-preview" class="pt-24 pb-12 px-4 sm:px-8 max-w-5xl mx-auto relative z-10 border-b border-gray-900">
+    <section id="gallery-preview" class="pt-24 pb-12 px-4 sm:px-8 max-w-5xl mx-auto relative z-10 border-b border-gray-900 overflow-hidden">
         <div class="mb-12 relative flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div class="relative pt-10">
-                <div class="text-[3rem] sm:text-[6rem] md:text-[8rem] font-bold text-gray-400 opacity-5 absolute top-0 left-0 -z-10 tracking-tighter select-none leading-none">GALLERY</div>
+                <div class="text-[3rem] sm:text-[6rem] md:text-[8rem] font-bold text-gray-400 opacity-5 absolute top-0 left-0 -z-10 tracking-tighter select-none leading-none whitespace-nowrap">GALLERY</div>
                 <h2 class="text-4xl md:text-5xl font-bold border-l-4 border-red-600 pl-4 md:pl-6 uppercase tracking-wider relative z-10 text-white font-racing">Action <span class="text-gray-500">en piste</span></h2>
             </div>
             
-            <a href="gallery.html" class="btn-racing bg-red-600 text-white font-bold py-2 md:py-3 px-6 md:px-8 shadow-[0_0_15px_rgba(230,0,0,0.4)] inline-block mb-2">
+            <a href="gallery.html" class="btn-racing bg-red-600 text-white font-bold py-2 md:py-3 px-6 md:px-8 shadow-[0_0_15px_rgba(230,0,0,0.4)] inline-block mb-2 self-start md:self-auto">
                 <span class="btn-racing-text tracking-widest text-base md:text-lg font-racing">VOIR TOUTE LA GALERIE</span>
             </a>
         </div>
 
-        <div class="columns-1 sm:columns-2 md:columns-3 gap-4 md:gap-6 masonry-grid">
-            
-            <div class="inline-block w-full break-inside-avoid mb-4 md:mb-6 bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container" onclick="ouvrirMedia(this)">
-                <video preload="metadata" poster="photos-albi/albi1.jpg" autoplay loop muted playsinline class="w-full h-auto object-cover media-element pointer-events-none group-hover:scale-105 transition-transform duration-700 ease-in-out">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 w-full">
+            <div class="w-full bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container aspect-[4/3]" onclick="ouvrirMedia(this)">
+                <video preload="metadata" poster="photos-albi/albi1.jpg" autoplay loop muted playsinline class="media-element pointer-events-none group-hover:scale-105 transition-transform duration-700 ease-in-out">
                     <source src="photos-albi/albi4.mp4" type="video/mp4">
                 </video>
                 <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
             </div>
 
-            <div class="inline-block w-full break-inside-avoid mb-4 md:mb-6 bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container" onclick="ouvrirMedia(this)">
-                <img src="photos_commissaire/header 1.jpg" alt="Aperçu" class="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out media-element">
+            <div class="w-full bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container aspect-[4/3]" onclick="ouvrirMedia(this)">
+                <img src="photos_commissaire/header 1.jpg" alt="Aperçu" class="media-element group-hover:scale-105 transition-transform duration-700 ease-in-out">
                 <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
             </div>
 
-            <div class="inline-block w-full break-inside-avoid mb-4 md:mb-6 bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container" onclick="ouvrirMedia(this)">
-                <img src="photos-albi/albi1.jpg" alt="Aperçu" class="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out media-element">
+            <div class="w-full bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container aspect-[4/3]" onclick="ouvrirMedia(this)">
+                <img src="photos-albi/albi1.jpg" alt="Aperçu" class="media-element group-hover:scale-105 transition-transform duration-700 ease-in-out">
                 <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
             </div>
 
-            <div class="inline-block w-full break-inside-avoid mb-4 md:mb-6 bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container" onclick="ouvrirMedia(this)">
-                <img src="photos_commissaire/header 2.jpg" alt="Aperçu" class="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out media-element">
+            <div class="w-full bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container aspect-[4/3]" onclick="ouvrirMedia(this)">
+                <img src="photos_commissaire/header 2.jpg" alt="Aperçu" class="media-element group-hover:scale-105 transition-transform duration-700 ease-in-out">
                 <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
             </div>
             
-            <div class="inline-block w-full break-inside-avoid mb-4 md:mb-6 bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container" onclick="ouvrirMedia(this)">
-                <img src="photos-albi/albi2.jpg" alt="Aperçu" class="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out media-element">
+            <div class="w-full bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container aspect-[4/3]" onclick="ouvrirMedia(this)">
+                <img src="photos-albi/albi2.jpg" alt="Aperçu" class="media-element group-hover:scale-105 transition-transform duration-700 ease-in-out">
+                <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
+            </div>
+
+            <div class="w-full bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container aspect-[4/3]" onclick="ouvrirMedia(this)">
+                <img src="photos-motos/départ-fsbk.jpg" alt="Moto FSBK" class="media-element group-hover:scale-105 transition-transform duration-700 ease-in-out">
                 <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
             </div>
         </div>
     </section>
 
     <!-- SECTION TEASER "À PROPOS" -->
-    <section id="about-teaser" class="py-16 px-4 sm:px-8 max-w-5xl mx-auto relative z-10 border-b border-gray-900">
+    <section id="about-teaser" class="py-16 px-4 sm:px-8 max-w-5xl mx-auto relative z-10 border-b border-gray-900 overflow-hidden">
         <div class="mb-12 relative pt-10">
-            <div class="text-[3rem] sm:text-[6rem] md:text-[8rem] font-bold text-gray-400 opacity-5 absolute top-0 left-0 -z-10 tracking-tighter select-none leading-none">OFFICIEL</div>
+            <div class="text-[3rem] sm:text-[6rem] md:text-[8rem] font-bold text-gray-400 opacity-5 absolute top-0 left-0 -z-10 tracking-tighter select-none leading-none whitespace-nowrap">OFFICIEL</div>
             <h2 class="text-4xl md:text-5xl font-bold border-l-4 border-red-600 pl-4 md:pl-6 uppercase tracking-wider relative z-10 text-white font-racing">À propos <span class="text-gray-500">d'Antoine</span></h2>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-12 gap-12 items-center animate-on-scroll">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-center animate-on-scroll">
             <div class="md:col-span-5 relative">
                 <div class="aspect-[3/4] bg-[#161616] border border-gray-800 rounded-lg overflow-hidden relative shadow-[0_0_30px_rgba(0,0,0,0.8)]">
-                    <img src="photos_commissaire/about.jpg" alt="Antoine - Commissaire de Piste" class="w-full h-full object-cover opacity-80 hover:opacity-100 transition-opacity" onerror="this.style.display='none'">
+                    <img src="photos_commissaire/about.jpg" alt="Antoine - Commissaire de Piste" class="w-full h-full object-cover opacity-80 hover:opacity-100 transition-opacity">
                 </div>
                 <div class="absolute -bottom-4 -right-4 w-16 h-16 md:w-24 md:h-24 border-b-4 border-r-4 border-red-600 -z-10"></div>
             </div>
@@ -238,9 +241,9 @@
     </section>
 
     <!-- SECTION EXPÉRIENCE (PALMARÈS) -->
-    <section id="experience" class="py-12 px-4 sm:px-8 max-w-5xl mx-auto min-h-screen relative z-10">
+    <section id="experience" class="py-12 px-4 sm:px-8 max-w-5xl mx-auto min-h-screen relative z-10 overflow-hidden">
         <div class="mb-20 relative pt-12">
-            <div class="text-[3rem] sm:text-[7rem] md:text-[9rem] font-bold text-gray-400 opacity-5 absolute top-0 left-0 -z-10 tracking-tighter select-none leading-none">TRACK RECORD</div>
+            <div class="text-[3rem] sm:text-[6rem] md:text-[8rem] font-bold text-gray-400 opacity-5 absolute top-0 left-0 -z-10 tracking-tighter select-none leading-none whitespace-nowrap">TRACK RECORD</div>
             <h2 class="text-5xl md:text-6xl font-bold border-l-4 border-red-600 pl-4 md:pl-6 uppercase tracking-wider relative z-10 text-white">Palmarès <span class="text-gray-500">& Épreuves</span></h2>
         </div>
         
@@ -503,7 +506,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             const slides = document.querySelectorAll('.hero-slide');
             let currentSlide = 0;
-            if(slides.length > 1) {
+            if (slides.length > 1) {
                 setInterval(() => {
                     slides[currentSlide].classList.remove('opacity-100');
                     slides[currentSlide].classList.add('opacity-0');
@@ -513,17 +516,14 @@
                 }, 5000); 
             }
 
-            // INITIALISATION DE L'ANIMATION AU DEFILEMENT (Intersection Observer)
             const elementsToAnimate = document.querySelectorAll('.animate-on-scroll');
-            elementsToAnimate.forEach(el => el.classList.add('reveal-left')); // On ajoute la classe d'état initial caché
+            elementsToAnimate.forEach(el => el.classList.add('reveal-left'));
 
             const observer = new IntersectionObserver((entries, obs) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        entry.target.classList.add('reveal-visible'); // Déclenche l'animation
-                        obs.unobserve(entry.target); // L'animation ne se joue qu'une fois
-                        
-                        // Nettoyage après l'animation pour ne pas interférer avec le hover
+                        entry.target.classList.add('reveal-visible');
+                        obs.unobserve(entry.target);
                         setTimeout(() => {
                             entry.target.classList.remove('reveal-left', 'reveal-visible');
                         }, 800); 
@@ -534,7 +534,6 @@
             elementsToAnimate.forEach(el => observer.observe(el));
         });
 
-        // GESTION GLOBALE DE LA TOUCHE ECHAP (FERMETURE MODALES)
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
                 if (document.getElementById('alert-box').classList.contains('show')) {
@@ -546,7 +545,6 @@
             }
         });
 
-        // OUVERTURE DYNAMIQUE DE LA CARTE GPS (Apple Maps ou Google Maps)
         function ouvrirCarte(lieu) {
             const query = encodeURIComponent(lieu);
             const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
@@ -580,11 +578,11 @@
         let indexMediaActuel = 0;
 
         function ouvrirMedia(element) {
-            const grille = element.closest('.masonry-grid') || element.closest('.grid');
+            const grille = element.closest('.grid') || element.closest('.flex');
             const mediaNodes = grille.querySelectorAll('.media-element');
             
             galerieActuelle = Array.from(mediaNodes).map(node => {
-                if(node.tagName.toLowerCase() === 'video') return { type: 'video', src: node.querySelector('source').src };
+                if (node.tagName.toLowerCase() === 'video') return { type: 'video', src: node.querySelector('source').src };
                 return { type: 'img', src: node.src };
             });
 
@@ -600,6 +598,7 @@
             setTimeout(() => { lightbox.classList.remove('opacity-0'); }, 10);
             
             lightbox.onclick = function(e) { if (e.target.id === 'lightbox') fermerImage(); };
+            document.addEventListener('keydown', gestionClavierLightbox);
         }
 
         function afficherDansLightbox() {
@@ -615,7 +614,7 @@
                 vidEl.load();
                 let playPromise = vidEl.play();
                 if (playPromise !== undefined) {
-                    playPromise.catch(error => { console.log("Lancement auto bloqué, attente action utilisateur."); });
+                    playPromise.catch(() => {});
                 }
             } else {
                 vidEl.classList.add('hidden');
@@ -642,6 +641,12 @@
                 document.getElementById('lightbox-video').pause();
                 document.getElementById('lightbox-video').src = '';
             }, 300);
+            document.removeEventListener('keydown', gestionClavierLightbox);
+        }
+
+        function gestionClavierLightbox(e) {
+            if (e.key === 'ArrowRight') naviguerImage(1);
+            else if (e.key === 'ArrowLeft') naviguerImage(-1);
         }
 
         function ouvrirMeeting(nomEvent) {
@@ -654,21 +659,170 @@
             btnPhoto.classList.remove('hidden');
             changerOnglet('desc');
 
-            // LE BOUTON CARTE RÉUTILISABLE
             const btnCarte = (lieu) => `<button onclick="ouvrirCarte('${lieu}')" class="ml-2 bg-gray-800 hover:bg-red-600 text-white text-xs py-1 px-2 rounded transition-colors inline-flex items-center gap-1 mt-1 md:mt-0 align-middle"><svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path></svg> Plan</button>`;
 
-            if (nomEvent === 'albi') {
+            if (nomEvent === 'vma') {
                 contentDesc.innerHTML = `
-                    <h3 class="text-4xl md:text-5xl font-bold text-red-500 mb-2 font-racing tracking-wide uppercase">Grand Prix Camions d'Albi 2026</h3>
+                    <h3 class="text-3xl md:text-5xl font-bold text-red-500 mb-2 font-racing tracking-wide uppercase">Championnat de France Classic (VMA)</h3>
                     <div class="h-1 w-20 bg-red-600 mb-6"></div>
-                    
-                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">
+                    <p class="text-gray-300 mb-4 text-sm md:text-base leading-relaxed">
+                        Le Vitesse Moto Ancienne (VMA) est le rendez-vous incontournable des machines historiques de compétition. C'est un véritable musée à ciel ouvert où l'esprit rétro et la mécanique pure sont à l'honneur.
+                    </p>
+                    <div class="bg-[#161616] p-4 md:p-6 mb-8 border-l-4 border-red-600">
+                        <h4 class="text-xl md:text-2xl font-bold text-white mb-4 font-racing tracking-wide">FICHE TECHNIQUE</h4>
+                        <ul class="list-none text-gray-400 text-sm space-y-2">
+                            <li><strong class="text-gray-300 uppercase">Dates :</strong> 29 et 30 Août 2026</li>
+                            <li><strong class="text-gray-300 uppercase">Lieu :</strong> Circuit Européen Pau-Arnos ${btnCarte('Circuit Européen Pau-Arnos')}</li>
+                            <li><strong class="text-gray-300 uppercase">Tracé :</strong> 3 030 mètres / 11 virages</li>
+                            <li><strong class="text-gray-300 uppercase">Organisateur :</strong> FFM</li>
+                        </ul>
+                    </div>
+                    <h4 class="text-2xl md:text-3xl font-bold text-white mb-4 font-racing uppercase tracking-wider border-b border-gray-800 pb-2">Les Plateaux en piste</h4>
+                    <ul class="list-disc list-inside text-gray-400 text-sm space-y-2 mb-8">
+                        <li><strong class="text-gray-300">Classic Post Classic & Historique :</strong> Les motos légendaires d'autrefois.</li>
+                        <li><strong class="text-gray-300">Supersport - Superbike :</strong> L'évolution vers les machines modernes.</li>
+                        <li><strong class="text-gray-300">Side Cars :</strong> Le ballet spectaculaire des pilotes et de leurs passagers.</li>
+                        <li><strong class="text-gray-300">Endurance Classic - EEC :</strong> Des courses de longue haleine à l'ancienne.</li>
+                    </ul>
+                    <h4 class="text-2xl md:text-3xl font-bold text-white mb-4 font-racing uppercase tracking-wider border-b border-gray-800 pb-2">Caractéristiques du tracé</h4>
+                    <div class="mb-6 bg-white p-2 md:p-4 flex justify-center border-4 border-gray-800">
+                        <img src="map_circuits/Pau-Arnos.png" alt="Tracé Pau-Arnos" class="w-full max-w-sm object-contain">
+                    </div>
+                `;
+                contentPhoto.innerHTML = `<div class="text-center py-20 bg-[#161616] border border-gray-800"><span class="text-5xl mb-4 block">📸</span><p class="text-gray-400 font-bold uppercase">Galerie en préparation</p></div>`;
+            }
+            else if (nomEvent === 'promosport') {
+                contentDesc.innerHTML = `
+                    <h3 class="text-3xl md:text-5xl font-bold text-red-500 mb-2 font-racing tracking-wide uppercase">Coupes de France Promosport</h3>
+                    <div class="h-1 w-20 bg-red-600 mb-6"></div>
+                    <p class="text-gray-300 mb-4 text-sm md:text-base leading-relaxed">
+                        Le Promosport est la véritable porte d'entrée de la vitesse moto en France. Ce championnat offre des batailles spectaculaires et extrêmement serrées entre pilotes amateurs de haut niveau.
+                    </p>
+                    <div class="bg-[#161616] p-4 md:p-6 mb-8 border-l-4 border-red-600">
+                        <h4 class="text-xl md:text-2xl font-bold text-white mb-4 font-racing tracking-wide">FICHE TECHNIQUE</h4>
+                        <ul class="list-none text-gray-400 text-sm space-y-2">
+                            <li><strong class="text-gray-300 uppercase">Dates :</strong> 25 et 26 Juillet 2026</li>
+                            <li><strong class="text-gray-300 uppercase">Lieu :</strong> Circuit Européen Pau-Arnos ${btnCarte('Circuit Européen Pau-Arnos')}</li>
+                            <li><strong class="text-gray-300 uppercase">Tracé :</strong> 3 030 mètres / 11 virages</li>
+                            <li><strong class="text-gray-300 uppercase">Organisateur :</strong> FFM</li>
+                        </ul>
+                    </div>
+                    <h4 class="text-2xl md:text-3xl font-bold text-white mb-4 font-racing uppercase tracking-wider border-b border-gray-800 pb-2">Les Plateaux en piste</h4>
+                    <ul class="list-disc list-inside text-gray-400 text-sm space-y-2 mb-8">
+                        <li><strong class="text-gray-300">Promo 600, Promo 1000 & Master :</strong> Les catégories reines de l'amateurisme éclairé.</li>
+                        <li><strong class="text-gray-300">Promo A2 & Promo Découverte :</strong> Les premiers pas en compétition.</li>
+                        <li><strong class="text-gray-300">Sportwin, Suzuki 8S Cup, Kawasaki ZX-4RR :</strong> Les formules de promotion de marque.</li>
+                    </ul>
+                    <h4 class="text-2xl md:text-3xl font-bold text-white mb-4 font-racing uppercase tracking-wider border-b border-gray-800 pb-2">Caractéristiques du tracé</h4>
+                    <div class="mb-6 bg-white p-2 md:p-4 flex justify-center border-4 border-gray-800">
+                        <img src="map_circuits/Pau-Arnos.png" alt="Tracé Pau-Arnos" class="w-full max-w-sm object-contain">
+                    </div>
+                `;
+                contentPhoto.innerHTML = `<div class="text-center py-20 bg-[#161616] border border-gray-800"><span class="text-5xl mb-4 block">📸</span><p class="text-gray-400 font-bold uppercase">Galerie en préparation</p></div>`;
+            }
+            else if (nomEvent === 'fsbk') {
+                contentDesc.innerHTML = `
+                    <h3 class="text-3xl md:text-5xl font-bold text-red-500 mb-2 font-racing tracking-wide uppercase">Championnat de France Superbike (FSBK)</h3>
+                    <div class="h-1 w-20 bg-red-600 mb-6"></div>
+                    <p class="text-gray-300 mb-4 text-sm md:text-base leading-relaxed">
+                        Le FSBK représente le sommet absolu de la vitesse moto hexagonale. L'élite des pilotes français s'y affronte sur des machines surpuissantes, partageant la piste avec le spectaculaire Championnat du Monde FIM Side-Car.
+                    </p>
+                    <div class="bg-[#161616] p-4 md:p-6 mb-8 border-l-4 border-red-600">
+                        <h4 class="text-xl md:text-2xl font-bold text-white mb-4 font-racing tracking-wide">FICHE TECHNIQUE</h4>
+                        <ul class="list-none text-gray-400 text-sm space-y-2">
+                            <li><strong class="text-gray-300 uppercase">Dates :</strong> 19, 20 et 21 Juin 2026</li>
+                            <li><strong class="text-gray-300 uppercase">Lieu :</strong> Circuit Européen Pau-Arnos ${btnCarte('Circuit Européen Pau-Arnos')}</li>
+                            <li><strong class="text-gray-300 uppercase">Tracé :</strong> 3 030 mètres / 11 virages</li>
+                            <li><strong class="text-gray-300 uppercase">Organisateur :</strong> FFM / Moto Club Pau-Arnos</li>
+                        </ul>
+                    </div>
+                    <h4 class="text-2xl md:text-3xl font-bold text-white mb-4 font-racing uppercase tracking-wider border-b border-gray-800 pb-2">Les Plateaux en piste</h4>
+                    <ul class="list-disc list-inside text-gray-400 text-sm space-y-2 mb-8">
+                        <li><strong class="text-gray-300">Superbike & Supersport :</strong> La catégorie reine et son antichambre (1000cc et 600cc).</li>
+                        <li><strong class="text-gray-300">Pre Moto 4 / Moto 4 OGP by Motul :</strong> Les futurs talents du monde de la moto.</li>
+                        <li><strong class="text-gray-300">European Bikes & Yamaha Challenge 700 :</strong> Diversité et baston en peloton.</li>
+                        <li><strong class="text-gray-300">Side Car & FIM Side Car (Mondial) :</strong> Le championnat de France et du Monde réunis.</li>
+                    </ul>
+                    <h4 class="text-2xl md:text-3xl font-bold text-white mb-4 font-racing uppercase tracking-wider border-b border-gray-800 pb-2">Caractéristiques du tracé</h4>
+                    <div class="mb-6 bg-white p-2 md:p-4 flex justify-center border-4 border-gray-800">
+                        <img src="map_circuits/Pau-Arnos.png" alt="Tracé Pau-Arnos" class="w-full max-w-sm object-contain">
+                    </div>
+                `;
+                contentPhoto.innerHTML = `
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-lg media-container aspect-[4/3]" onclick="ouvrirMedia(this)">
+                            <img src="photos-motos/départ-fsbk.jpg" alt="Départ FSBK" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 media-element">
+                            <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
+                        </div>
+                    </div>
+                `;
+            }
+            else if (nomEvent === 'werc') {
+                contentDesc.innerHTML = `
+                    <h3 class="text-3xl md:text-5xl font-bold text-red-500 mb-2 font-racing tracking-wide uppercase">Week-End Racing Cup Dunlop GP Racer</h3>
+                    <div class="h-1 w-20 bg-red-600 mb-6"></div>
+                    <p class="text-gray-300 mb-4 text-sm md:text-base leading-relaxed">
+                        Le WERC propose un concept original combinant des épreuves de vitesse sprint avec des manches d'endurance d'une heure. Il met notamment à l'honneur la spectaculaire catégorie des Roadsters.
+                    </p>
+                    <div class="bg-[#161616] p-4 md:p-6 mb-8 border-l-4 border-red-600">
+                        <h4 class="text-xl md:text-2xl font-bold text-white mb-4 font-racing tracking-wide">FICHE TECHNIQUE</h4>
+                        <ul class="list-none text-gray-400 text-sm space-y-2">
+                            <li><strong class="text-gray-300 uppercase">Dates :</strong> 2 et 3 Mai 2026</li>
+                            <li><strong class="text-gray-300 uppercase">Lieu :</strong> Circuit Européen Pau-Arnos ${btnCarte('Circuit Européen Pau-Arnos')}</li>
+                            <li><strong class="text-gray-300 uppercase">Tracé :</strong> 3 030 mètres / 11 virages</li>
+                            <li><strong class="text-gray-300 uppercase">Spécificité :</strong> Sprint + Endurance</li>
+                        </ul>
+                    </div>
+                    <h4 class="text-2xl md:text-3xl font-bold text-white mb-4 font-racing uppercase tracking-wider border-b border-gray-800 pb-2">Les Plateaux en piste</h4>
+                    <ul class="list-disc list-inside text-gray-400 text-sm space-y-2 mb-8">
+                        <li><strong class="text-gray-300">Promotion Cup 600 BRC & Promotion Cup 1000 :</strong> Vitesse et stratégie.</li>
+                        <li><strong class="text-gray-300">CDF Roadster Cup & TDF Twin Cup :</strong> Les motos non carénées (naked) et les bicylindres.</li>
+                        <li><strong class="text-gray-300">First Race Cup & Igol Continental Cup :</strong> La compétition accessible.</li>
+                        <li><strong class="text-gray-300">Challenge des Monos & Challenge Protwin :</strong> Plateaux dédiés aux architectures moteurs spécifiques.</li>
+                    </ul>
+                    <h4 class="text-2xl md:text-3xl font-bold text-white mb-4 font-racing uppercase tracking-wider border-b border-gray-800 pb-2">Caractéristiques du tracé</h4>
+                    <div class="mb-6 bg-white p-2 md:p-4 flex justify-center border-4 border-gray-800">
+                        <img src="map_circuits/Pau-Arnos.png" alt="Tracé Pau-Arnos" class="w-full max-w-sm object-contain">
+                    </div>
+                `;
+                contentPhoto.innerHTML = `<div class="text-center py-20 bg-[#161616] border border-gray-800"><span class="text-5xl mb-4 block">📸</span><p class="text-gray-400 font-bold uppercase">Galerie en préparation</p></div>`;
+            }
+            else if (nomEvent === 'trophee_arnos') {
+                contentDesc.innerHTML = `
+                    <h3 class="text-3xl md:text-5xl font-bold text-red-500 mb-2 font-racing tracking-wide uppercase">Trophée Pau Arnos</h3>
+                    <div class="h-1 w-20 bg-red-600 mb-6"></div>
+                    <p class="text-gray-300 mb-4 text-sm md:text-base leading-relaxed">
+                        Le Trophée Pau Arnos est l'événement incontournable organisé par le club local, réunissant plusieurs catégories pour des courses de vitesse et d'endurance très disputées.
+                    </p>
+                    <div class="bg-[#161616] p-4 md:p-6 mb-8 border-l-4 border-red-600">
+                        <h4 class="text-xl md:text-2xl font-bold text-white mb-4 font-racing tracking-wide">FICHE TECHNIQUE</h4>
+                        <ul class="list-none text-gray-400 text-sm space-y-2">
+                            <li><strong class="text-gray-300 uppercase">Dates :</strong> 23 et 24 Mai 2026</li>
+                            <li><strong class="text-gray-300 uppercase">Lieu :</strong> Circuit Européen Pau-Arnos ${btnCarte('Circuit Européen Pau-Arnos')}</li>
+                            <li><strong class="text-gray-300 uppercase">Tracé :</strong> 3 030 mètres / 11 virages</li>
+                            <li><strong class="text-gray-300 uppercase">Organisateur :</strong> Club Moto Pau-Arnos</li>
+                        </ul>
+                    </div>
+                    <h4 class="text-2xl md:text-3xl font-bold text-white mb-4 font-racing uppercase tracking-wider border-b border-gray-800 pb-2">Les Plateaux en piste</h4>
+                    <ul class="list-disc list-inside text-gray-400 text-sm space-y-2 mb-8">
+                        <li><strong class="text-gray-300">CLNA 600, CLNA 1000 & Séries B :</strong> Championnat de Ligue Nouvelle-Aquitaine.</li>
+                        <li><strong class="text-gray-300">CLNA Endurance :</strong> L'épreuve de longue durée régionale.</li>
+                        <li><strong class="text-gray-300">500 Cup & Side Cars :</strong> Animation et diversité sur la piste.</li>
+                    </ul>
+                    <h4 class="text-2xl md:text-3xl font-bold text-white mb-4 font-racing uppercase tracking-wider border-b border-gray-800 pb-2">Caractéristiques du tracé</h4>
+                    <div class="mb-6 bg-white p-2 md:p-4 flex justify-center border-4 border-gray-800">
+                        <img src="map_circuits/Pau-Arnos.png" alt="Tracé Pau-Arnos" class="w-full max-w-sm object-contain">
+                    </div>
+                `;
+                contentPhoto.innerHTML = `<div class="text-center py-20 bg-[#161616] border border-gray-800"><span class="text-5xl mb-4 block">📸</span><p class="text-gray-400 font-bold uppercase">Galerie en préparation</p></div>`;
+            }
+            else if (nomEvent === 'albi') {
+                contentDesc.innerHTML = `
+                    <h3 class="text-3xl md:text-5xl font-bold text-red-500 mb-2 font-racing tracking-wide uppercase">Grand Prix Camions d'Albi 2026</h3>
+                    <div class="h-1 w-20 bg-red-600 mb-6"></div>
+                    <p class="text-gray-300 mb-4 text-sm md:text-base leading-relaxed">
                         Le Grand Prix Camions d'Albi 2026 est une compétition de sport automobile et de sport mécanique poids lourds qui s'est tenue les 9 et 10 octobre 2026 sur le circuit d'Albi, situé au Séquestre dans le département du Tarn (France). Il est la finale du Championnat de France Camions de la saison 2026 et s'accompagne d'épreuves de soutien spectaculaires, dont la célèbre Legends Cars Cup.
                     </p>
-                    <p class="text-gray-300 mb-8 text-sm leading-relaxed">
-                        Cet événement réunit traditionnellement plusieurs dizaines de milliers de spectateurs passionnés par le gigantisme des courses de camions et l'ambiance festive qui y est associée.
-                    </p>
-
                     <div class="bg-[#161616] p-4 md:p-6 mb-8 border-l-4 border-red-600">
                         <h4 class="text-xl md:text-2xl font-bold text-white mb-4 font-racing tracking-wide">FICHE TECHNIQUE</h4>
                         <ul class="list-none text-gray-400 text-sm space-y-2">
@@ -678,7 +832,6 @@
                             <li><strong class="text-gray-300 uppercase">Organisateur :</strong> FFSA et FranceRoutes</li>
                         </ul>
                     </div>
-
                     <h4 class="text-2xl md:text-3xl font-bold text-white mb-4 font-racing uppercase tracking-wider border-b border-gray-800 pb-2">Les Plateaux en piste</h4>
                     <div class="space-y-6 mb-8">
                         <div>
@@ -691,233 +844,38 @@
                         <div>
                             <h5 class="font-bold text-red-500 mb-2 text-base md:text-lg uppercase tracking-wider">Legends Cars Cup</h5>
                             <ul class="list-disc list-inside text-gray-400 text-sm space-y-2">
-                                <li><strong class="text-gray-300">Concept :</strong> Répliques (échelle 5/8ème) de vieilles gloires américaines des années 30/40.</li>
+                                <li><strong class="text-gray-300">Concept :</strong> Répliques de vieilles gloires américaines des années 30/40.</li>
                                 <li><strong class="text-gray-300">Technique :</strong> Ultra-légers (480 kg), moteurs de moto Yamaha 3 cylindres (~140 ch).</li>
-                                <li><strong class="text-gray-300">Pilotage :</strong> "En glisse" (absence de différentiel arrière). Aspiration forte.</li>
                             </ul>
                         </div>
                     </div>
-
                     <h4 class="text-2xl md:text-3xl font-bold text-white mb-4 font-racing uppercase tracking-wider border-b border-gray-800 pb-2">Caractéristiques du tracé</h4>
                     <div class="mb-6 bg-white p-2 md:p-4 flex justify-center border-4 border-gray-800">
-                        <img src="map_circuits/albi.png" alt="Tracé du Circuit d'Albi" class="w-full max-w-sm object-contain" title="Plan du tracé d'Albi">
+                        <img src="map_circuits/albi.png" alt="Tracé du Circuit d'Albi" class="w-full max-w-sm object-contain">
                     </div>
-                    <ul class="list-disc list-inside text-gray-400 text-sm space-y-2 mb-8">
-                        <li><strong class="text-gray-300">Un profil ultra-plat :</strong> Aucun dénivelé, piste très rapide.</li>
-                        <li><strong class="text-gray-300">Le défi des freins :</strong> Chicanes serrées. Un camion consomme environ 200L d'eau par course pour refroidir ses freins !</li>
-                    </ul>
                 `;
-
                 contentPhoto.innerHTML = `
-                    <div class="columns-1 sm:columns-2 gap-4 masonry-grid">
-                        <div class="inline-block w-full break-inside-avoid mb-4 bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-lg media-container" onclick="ouvrirMedia(this)">
-                            <video preload="metadata" poster="photos-albi/albi1.jpg" autoplay loop muted playsinline class="w-full h-auto object-cover media-element pointer-events-none group-hover:scale-105 transition-transform duration-700 ease-in-out">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-lg media-container aspect-[4/3]" onclick="ouvrirMedia(this)">
+                            <video preload="metadata" poster="photos-albi/albi1.jpg" autoplay loop muted playsinline class="w-full h-full object-cover media-element pointer-events-none group-hover:scale-105 transition-transform duration-700 ease-in-out">
                                 <source src="photos-albi/albi4.mp4" type="video/mp4">
                             </video>
                             <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
                         </div>
-                        <div class="inline-block w-full break-inside-avoid mb-4 bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-lg media-container" onclick="ouvrirMedia(this)">
-                            <img src="photos-albi/albi1.jpg" alt="Albi" class="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-500 media-element">
+                        <div class="bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-lg media-container aspect-[4/3]" onclick="ouvrirMedia(this)">
+                            <img src="photos-albi/albi1.jpg" alt="Albi" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 media-element">
                             <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
                         </div>
                     </div>
                 `;
             } 
-            else if (nomEvent === 'vma') {
+            else if (nomEvent === 'Tour Auto 2024' || nomEvent === 'Tour Auto 2026') {
                 contentDesc.innerHTML = `
-                    <h3 class="text-4xl md:text-5xl font-bold text-red-500 mb-2 font-racing tracking-wide uppercase">Championnat de France Classic (VMA)</h3>
+                    <h3 class="text-3xl md:text-5xl font-bold text-red-500 mb-2 font-racing tracking-wide uppercase">Tour Auto</h3>
                     <div class="h-1 w-20 bg-red-600 mb-6"></div>
-                    
-                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">
-                        Le Vitesse Moto Ancienne (VMA) est le rendez-vous incontournable des machines historiques de compétition. C'est un véritable musée à ciel ouvert où l'esprit rétro et la mécanique pure sont à l'honneur.
+                    <p class="text-gray-300 mb-4 text-sm md:text-base leading-relaxed">
+                        Le Tour Auto est l'un des rallyes historiques les plus prestigieux au monde, alliant épreuves sur routes fermées et courses sur circuits. Il fait revivre la légende du Tour de France Automobile avec des voitures d'exception.
                     </p>
-
-                    <div class="bg-[#161616] p-4 md:p-6 mb-8 border-l-4 border-red-600">
-                        <h4 class="text-xl md:text-2xl font-bold text-white mb-4 font-racing tracking-wide">FICHE TECHNIQUE</h4>
-                        <ul class="list-none text-gray-400 text-sm space-y-2">
-                            <li><strong class="text-gray-300 uppercase">Dates :</strong> 29 et 30 Août 2026</li>
-                            <li><strong class="text-gray-300 uppercase">Lieu :</strong> Circuit Européen Pau-Arnos ${btnCarte('Circuit Européen Pau-Arnos')}</li>
-                            <li><strong class="text-gray-300 uppercase">Tracé :</strong> 3 030 mètres / 11 virages</li>
-                            <li><strong class="text-gray-300 uppercase">Organisateur :</strong> FFM</li>
-                        </ul>
-                    </div>
-
-                    <h4 class="text-2xl md:text-3xl font-bold text-white mb-4 font-racing uppercase tracking-wider border-b border-gray-800 pb-2">Les Plateaux en piste</h4>
-                    <div class="space-y-6 mb-8">
-                        <ul class="list-disc list-inside text-gray-400 text-sm space-y-2 mb-8">
-                            <li><strong class="text-gray-300">Classic Post Classic & Historique :</strong> Les motos légendaires d'autrefois.</li>
-                            <li><strong class="text-gray-300">Supersport - Superbike :</strong> L'évolution vers les machines modernes.</li>
-                            <li><strong class="text-gray-300">Side Cars :</strong> Le ballet spectaculaire des pilotes et de leurs passagers.</li>
-                            <li><strong class="text-gray-300">Endurance Classic - EEC :</strong> Des courses de longue haleine à l'ancienne.</li>
-                        </ul>
-                    </div>
-
-                    <h4 class="text-2xl md:text-3xl font-bold text-white mb-4 font-racing uppercase tracking-wider border-b border-gray-800 pb-2">Caractéristiques du tracé</h4>
-                    <div class="mb-6 bg-white p-2 md:p-4 flex justify-center border-4 border-gray-800">
-                        <img src="map_circuits/Pau-Arnos.png" alt="Tracé Pau-Arnos" class="w-full max-w-sm object-contain" title="Plan du tracé">
-                    </div>
-                `;
-                contentPhoto.innerHTML = `<div class="text-center py-20 bg-[#161616] border border-gray-800"><span class="text-5xl mb-4 block">📸</span><p class="text-gray-400 font-bold uppercase">Galerie en préparation</p></div>`;
-            }
-            else if (nomEvent === 'promosport') {
-                contentDesc.innerHTML = `
-                    <h3 class="text-4xl md:text-5xl font-bold text-red-500 mb-2 font-racing tracking-wide uppercase">Coupes de France Promosport</h3>
-                    <div class="h-1 w-20 bg-red-600 mb-6"></div>
-                    
-                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">
-                        Le Promosport est la véritable porte d'entrée de la vitesse moto en France. Ce championnat offre des batailles spectaculaires et extrêmement serrées entre pilotes amateurs de haut niveau.
-                    </p>
-
-                    <div class="bg-[#161616] p-4 md:p-6 mb-8 border-l-4 border-red-600">
-                        <h4 class="text-xl md:text-2xl font-bold text-white mb-4 font-racing tracking-wide">FICHE TECHNIQUE</h4>
-                        <ul class="list-none text-gray-400 text-sm space-y-2">
-                            <li><strong class="text-gray-300 uppercase">Dates :</strong> 25 et 26 Juillet 2026</li>
-                            <li><strong class="text-gray-300 uppercase">Lieu :</strong> Circuit Européen Pau-Arnos ${btnCarte('Circuit Européen Pau-Arnos')}</li>
-                            <li><strong class="text-gray-300 uppercase">Tracé :</strong> 3 030 mètres / 11 virages</li>
-                            <li><strong class="text-gray-300 uppercase">Organisateur :</strong> FFM</li>
-                        </ul>
-                    </div>
-
-                    <h4 class="text-2xl md:text-3xl font-bold text-white mb-4 font-racing uppercase tracking-wider border-b border-gray-800 pb-2">Les Plateaux en piste</h4>
-                    <div class="space-y-6 mb-8">
-                        <ul class="list-disc list-inside text-gray-400 text-sm space-y-2 mb-8">
-                            <li><strong class="text-gray-300">Promo 600, Promo 1000 & Master :</strong> Les catégories reines de l'amateurisme éclairé.</li>
-                            <li><strong class="text-gray-300">Promo A2 & Promo Découverte :</strong> Les premiers pas en compétition.</li>
-                            <li><strong class="text-gray-300">Sportwin, Suzuki 8S Cup, Kawasaki ZX-4RR :</strong> Les formules de promotion de marque.</li>
-                        </ul>
-                    </div>
-
-                    <h4 class="text-2xl md:text-3xl font-bold text-white mb-4 font-racing uppercase tracking-wider border-b border-gray-800 pb-2">Caractéristiques du tracé</h4>
-                    <div class="mb-6 bg-white p-2 md:p-4 flex justify-center border-4 border-gray-800">
-                        <img src="map_circuits/Pau-Arnos.png" alt="Tracé Pau-Arnos" class="w-full max-w-sm object-contain" title="Plan du tracé">
-                    </div>
-                `;
-                contentPhoto.innerHTML = `<div class="text-center py-20 bg-[#161616] border border-gray-800"><span class="text-5xl mb-4 block">📸</span><p class="text-gray-400 font-bold uppercase">Galerie en préparation</p></div>`;
-            }
-            else if (nomEvent === 'fsbk') {
-                contentDesc.innerHTML = `
-                    <h3 class="text-4xl md:text-5xl font-bold text-red-500 mb-2 font-racing tracking-wide uppercase">Championnat de France Superbike (FSBK)</h3>
-                    <div class="h-1 w-20 bg-red-600 mb-6"></div>
-                    
-                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">
-                        Le FSBK représente le sommet absolu de la vitesse moto hexagonale. L'élite des pilotes français s'y affronte sur des machines surpuissantes, partageant la piste avec le spectaculaire Championnat du Monde FIM Side-Car.
-                    </p>
-
-                    <div class="bg-[#161616] p-4 md:p-6 mb-8 border-l-4 border-red-600">
-                        <h4 class="text-xl md:text-2xl font-bold text-white mb-4 font-racing tracking-wide">FICHE TECHNIQUE</h4>
-                        <ul class="list-none text-gray-400 text-sm space-y-2">
-                            <li><strong class="text-gray-300 uppercase">Dates :</strong> 19, 20 et 21 Juin 2026</li>
-                            <li><strong class="text-gray-300 uppercase">Lieu :</strong> Circuit Européen Pau-Arnos ${btnCarte('Circuit Européen Pau-Arnos')}</li>
-                            <li><strong class="text-gray-300 uppercase">Tracé :</strong> 3 030 mètres / 11 virages</li>
-                            <li><strong class="text-gray-300 uppercase">Organisateur :</strong> FFM / Moto Club Pau-Arnos</li>
-                        </ul>
-                    </div>
-
-                    <h4 class="text-2xl md:text-3xl font-bold text-white mb-4 font-racing uppercase tracking-wider border-b border-gray-800 pb-2">Les Plateaux en piste</h4>
-                    <div class="space-y-6 mb-8">
-                        <ul class="list-disc list-inside text-gray-400 text-sm space-y-2 mb-8">
-                            <li><strong class="text-gray-300">Superbike & Supersport :</strong> La catégorie reine et son antichambre (1000cc et 600cc).</li>
-                            <li><strong class="text-gray-300">Pre Moto 4 / Moto 4 OGP by Motul :</strong> Les futurs talents du monde de la moto.</li>
-                            <li><strong class="text-gray-300">European Bikes & Yamaha Challenge 700 :</strong> Diversité et baston en peloton.</li>
-                            <li><strong class="text-gray-300">Side Car & FIM Side Car (Mondial) :</strong> Le championnat de France et du Monde réunis.</li>
-                        </ul>
-                    </div>
-
-                    <h4 class="text-2xl md:text-3xl font-bold text-white mb-4 font-racing uppercase tracking-wider border-b border-gray-800 pb-2">Caractéristiques du tracé</h4>
-                    <div class="mb-6 bg-white p-2 md:p-4 flex justify-center border-4 border-gray-800">
-                        <img src="map_circuits/Pau-Arnos.png" alt="Tracé Pau-Arnos" class="w-full max-w-sm object-contain" title="Plan du tracé">
-                    </div>
-                `;
-                contentPhoto.innerHTML = `
-                    <div class="columns-1 sm:columns-2 gap-4 masonry-grid">
-                        <div class="inline-block w-full break-inside-avoid mb-4 bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-lg media-container" onclick="ouvrirMedia(this)">
-                            <img src="photos-motos/départ-fsbk.jpg" alt="Départ FSBK" class="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-500 media-element">
-                            <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
-                        </div>
-                    </div>
-                `;
-            }
-            else if (nomEvent === 'werc') {
-                contentDesc.innerHTML = `
-                    <h3 class="text-4xl md:text-5xl font-bold text-red-500 mb-2 font-racing tracking-wide uppercase">Week-End Racing Cup Dunlop GP Racer</h3>
-                    <div class="h-1 w-20 bg-red-600 mb-6"></div>
-                    
-                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">
-                        Le WERC propose un concept original combinant des épreuves de vitesse sprint avec des manches d'endurance d'une heure. Il met notamment à l'honneur la spectaculaire catégorie des Roadsters.
-                    </p>
-
-                    <div class="bg-[#161616] p-4 md:p-6 mb-8 border-l-4 border-red-600">
-                        <h4 class="text-xl md:text-2xl font-bold text-white mb-4 font-racing tracking-wide">FICHE TECHNIQUE</h4>
-                        <ul class="list-none text-gray-400 text-sm space-y-2">
-                            <li><strong class="text-gray-300 uppercase">Dates :</strong> 2 et 3 Mai 2026</li>
-                            <li><strong class="text-gray-300 uppercase">Lieu :</strong> Circuit Européen Pau-Arnos ${btnCarte('Circuit Européen Pau-Arnos')}</li>
-                            <li><strong class="text-gray-300 uppercase">Tracé :</strong> 3 030 mètres / 11 virages</li>
-                            <li><strong class="text-gray-300 uppercase">Spécificité :</strong> Sprint + Endurance</li>
-                        </ul>
-                    </div>
-
-                    <h4 class="text-2xl md:text-3xl font-bold text-white mb-4 font-racing uppercase tracking-wider border-b border-gray-800 pb-2">Les Plateaux en piste</h4>
-                    <div class="space-y-6 mb-8">
-                        <ul class="list-disc list-inside text-gray-400 text-sm space-y-2 mb-8">
-                            <li><strong class="text-gray-300">Promotion Cup 600 BRC & Promotion Cup 1000 :</strong> Vitesse et stratégie.</li>
-                            <li><strong class="text-gray-300">CDF Roadster Cup & TDF Twin Cup :</strong> Les motos non carénées (naked) et les bicylindres.</li>
-                            <li><strong class="text-gray-300">First Race Cup & Igol Continental Cup :</strong> La compétition accessible.</li>
-                            <li><strong class="text-gray-300">Challenge des Monos & Challenge Protwin :</strong> Plateaux dédiés aux architectures moteurs spécifiques.</li>
-                        </ul>
-                    </div>
-
-                    <h4 class="text-2xl md:text-3xl font-bold text-white mb-4 font-racing uppercase tracking-wider border-b border-gray-800 pb-2">Caractéristiques du tracé</h4>
-                    <div class="mb-6 bg-white p-2 md:p-4 flex justify-center border-4 border-gray-800">
-                        <img src="map_circuits/Pau-Arnos.png" alt="Tracé Pau-Arnos" class="w-full max-w-sm object-contain" title="Plan du tracé">
-                    </div>
-                `;
-                contentPhoto.innerHTML = `<div class="text-center py-20 bg-[#161616] border border-gray-800"><span class="text-5xl mb-4 block">📸</span><p class="text-gray-400 font-bold uppercase">Galerie en préparation</p></div>`;
-            }
-            else if (nomEvent === 'trophee_arnos') {
-                contentDesc.innerHTML = `
-                    <h3 class="text-4xl md:text-5xl font-bold text-red-500 mb-2 font-racing tracking-wide uppercase">Trophée Pau Arnos</h3>
-                    <div class="h-1 w-20 bg-red-600 mb-6"></div>
-                    
-                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">
-                        Le Trophée Pau Arnos est l'événement incontournable organisé par le club local, réunissant plusieurs catégories pour des courses de vitesse et d'endurance très disputées.
-                    </p>
-
-                    <div class="bg-[#161616] p-4 md:p-6 mb-8 border-l-4 border-red-600">
-                        <h4 class="text-xl md:text-2xl font-bold text-white mb-4 font-racing tracking-wide">FICHE TECHNIQUE</h4>
-                        <ul class="list-none text-gray-400 text-sm space-y-2">
-                            <li><strong class="text-gray-300 uppercase">Dates :</strong> 23 et 24 Mai 2026</li>
-                            <li><strong class="text-gray-300 uppercase">Lieu :</strong> Circuit Européen Pau-Arnos ${btnCarte('Circuit Européen Pau-Arnos')}</li>
-                            <li><strong class="text-gray-300 uppercase">Tracé :</strong> 3 030 mètres / 11 virages</li>
-                            <li><strong class="text-gray-300 uppercase">Organisateur :</strong> Club Moto Pau-Arnos</li>
-                        </ul>
-                    </div>
-
-                    <h4 class="text-2xl md:text-3xl font-bold text-white mb-4 font-racing uppercase tracking-wider border-b border-gray-800 pb-2">Les Plateaux en piste</h4>
-                    <div class="space-y-6 mb-8">
-                        <ul class="list-disc list-inside text-gray-400 text-sm space-y-2 mb-8">
-                            <li><strong class="text-gray-300">CLNA 600, CLNA 1000 & Séries B :</strong> Championnat de Ligue Nouvelle-Aquitaine.</li>
-                            <li><strong class="text-gray-300">CLNA Endurance :</strong> L'épreuve de longue durée régionale.</li>
-                            <li><strong class="text-gray-300">500 Cup & Side Cars :</strong> Animation et diversité sur la piste.</li>
-                        </ul>
-                    </div>
-
-                    <h4 class="text-2xl md:text-3xl font-bold text-white mb-4 font-racing uppercase tracking-wider border-b border-gray-800 pb-2">Caractéristiques du tracé</h4>
-                    <div class="mb-6 bg-white p-2 md:p-4 flex justify-center border-4 border-gray-800">
-                        <img src="map_circuits/Pau-Arnos.png" alt="Tracé Pau-Arnos" class="w-full max-w-sm object-contain" title="Plan du tracé">
-                    </div>
-                `;
-                contentPhoto.innerHTML = `<div class="text-center py-20 bg-[#161616] border border-gray-800"><span class="text-5xl mb-4 block">📸</span><p class="text-gray-400 font-bold uppercase">Galerie en préparation</p></div>`;
-            }
-
-            else if (nomEvent === 'Tour Auto 2026' || nomEvent === 'Tour Auto 2024') {
-                contentDesc.innerHTML = `
-                    <h3 class="text-4xl md:text-5xl font-bold text-red-500 mb-2 font-racing tracking-wide uppercase">Tour Auto</h3>
-                    <div class="h-1 w-20 bg-red-600 mb-6"></div>
-                    
-                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">
-                        Le Tour Auto est l'un des rallyes historiques les plus prestigieux au monde, alliant épreuves sur routes fermées et courses sur circuits. Il fait revivre la légende du Tour de France Automobile avec des voitures d'exception. L'étape de Pau-Arnos offre un terrain de jeu très technique pour ces véhicules historiques, exigeant une grande maîtrise de la part des équipages.
-                    </p>
-
                     <div class="bg-[#161616] p-4 md:p-6 mb-8 border-l-4 border-red-600">
                         <h4 class="text-xl md:text-2xl font-bold text-white mb-4 font-racing tracking-wide">FICHE TECHNIQUE</h4>
                         <ul class="list-none text-gray-400 text-sm space-y-2">
@@ -926,32 +884,25 @@
                             <li><strong class="text-gray-300 uppercase">Organisateur :</strong> Peter Auto</li>
                         </ul>
                     </div>
-
                     <h4 class="text-2xl md:text-3xl font-bold text-white mb-4 font-racing uppercase tracking-wider border-b border-gray-800 pb-2">Les Plateaux en piste</h4>
-                    <div class="space-y-6 mb-8">
-                        <ul class="list-disc list-inside text-gray-400 text-sm space-y-2 mb-8">
-                            <li><strong class="text-gray-300">Compétition & Régularité :</strong> Les modèles ayant couru l'épreuve originale entre 1951 et 1973.</li>
-                            <li><strong class="text-gray-300">VHC (Véhicules Historiques de Compétition) :</strong> Voitures préparées pour la course (arceaux, etc.).</li>
-                            <li><strong class="text-gray-300">Plateaux Spécifiques (selon éditions) :</strong> Prototypes, modèles iconiques (Ferrari 250 GT, Jaguar Type E, Ford GT40, etc.).</li>
-                        </ul>
-                    </div>
-
+                    <ul class="list-disc list-inside text-gray-400 text-sm space-y-2 mb-8">
+                        <li><strong class="text-gray-300">Compétition & Régularité :</strong> Les modèles ayant couru l'épreuve originale entre 1951 et 1973.</li>
+                        <li><strong class="text-gray-300">VHC (Véhicules Historiques de Compétition) :</strong> Voitures préparées pour la course (arceaux, etc.).</li>
+                    </ul>
                     <h4 class="text-2xl md:text-3xl font-bold text-white mb-4 font-racing uppercase tracking-wider border-b border-gray-800 pb-2">Caractéristiques du tracé</h4>
                     <div class="mb-6 bg-white p-2 md:p-4 flex justify-center border-4 border-gray-800">
-                        <img src="map_circuits/Pau-Arnos.png" alt="Tracé Pau-Arnos" class="w-full max-w-sm object-contain" title="Plan du tracé">
+                        <img src="map_circuits/Pau-Arnos.png" alt="Tracé Pau-Arnos" class="w-full max-w-sm object-contain">
                     </div>
                 `;
                 contentPhoto.innerHTML = `<div class="text-center py-20 bg-[#161616] border border-gray-800"><span class="text-5xl mb-4 block">📸</span><p class="text-gray-400 font-bold uppercase">Galerie en préparation</p></div>`;
             }
             else if (nomEvent === 'Coupe de France des Circuits') {
                 contentDesc.innerHTML = `
-                    <h3 class="text-4xl md:text-5xl font-bold text-red-500 mb-2 font-racing tracking-wide uppercase">Coupe de France des Circuits</h3>
+                    <h3 class="text-3xl md:text-5xl font-bold text-red-500 mb-2 font-racing tracking-wide uppercase">Coupe de France des Circuits</h3>
                     <div class="h-1 w-20 bg-red-600 mb-6"></div>
-                    
-                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">
-                        La Coupe de France des Circuits est une compétition nationale ouverte aux pilotes amateurs. Elle se caractérise par la grande variété des véhicules engagés, allant des petites berlines de série aux puissantes GT et prototypes. C'est l'essence même du sport automobile amateur en circuit, alliant passion, accessibilité et diversité.
+                    <p class="text-gray-300 mb-4 text-sm md:text-base leading-relaxed">
+                        La Coupe de France des Circuits est une compétition nationale ouverte aux pilotes amateurs. Elle se caractérise par la grande variété des véhicules engagés, allant des petites berlines de série aux puissantes GT et prototypes.
                     </p>
-
                     <div class="bg-[#161616] p-4 md:p-6 mb-8 border-l-4 border-red-600">
                         <h4 class="text-xl md:text-2xl font-bold text-white mb-4 font-racing tracking-wide">FICHE TECHNIQUE</h4>
                         <ul class="list-none text-gray-400 text-sm space-y-2">
@@ -960,32 +911,26 @@
                             <li><strong class="text-gray-300 uppercase">Organisateur :</strong> FFSA / ASAC Basco-Béarnais</li>
                         </ul>
                     </div>
-
                     <h4 class="text-2xl md:text-3xl font-bold text-white mb-4 font-racing uppercase tracking-wider border-b border-gray-800 pb-2">Les Plateaux en piste</h4>
-                    <div class="space-y-6 mb-8">
-                        <ul class="list-disc list-inside text-gray-400 text-sm space-y-2 mb-8">
-                            <li><strong class="text-gray-300">Groupe GT / Prototypes / Monoplaces :</strong> Les véhicules les plus rapides (Formule Renault, Protos CN, etc.).</li>
-                            <li><strong class="text-gray-300">Groupe N / A / FA / FN :</strong> Berlines de tourisme issues de la série (Clio, Peugeot 206/208, Honda Civic, etc.).</li>
-                            <li><strong class="text-gray-300">Twin Cup :</strong> Coupe mono-marque très populaire et animée (Renault Twingo).</li>
-                        </ul>
-                    </div>
-
+                    <ul class="list-disc list-inside text-gray-400 text-sm space-y-2 mb-8">
+                        <li><strong class="text-gray-300">Groupe GT / Prototypes / Monoplaces :</strong> Les véhicules les plus rapides (Formule Renault, Protos CN, etc.).</li>
+                        <li><strong class="text-gray-300">Groupe N / A / FA / FN :</strong> Berlines de tourisme issues de la série.</li>
+                        <li><strong class="text-gray-300">Twin Cup :</strong> Coupe mono-marque très populaire et animée (Renault Twingo).</li>
+                    </ul>
                     <h4 class="text-2xl md:text-3xl font-bold text-white mb-4 font-racing uppercase tracking-wider border-b border-gray-800 pb-2">Caractéristiques du tracé</h4>
                     <div class="mb-6 bg-white p-2 md:p-4 flex justify-center border-4 border-gray-800">
-                        <img src="map_circuits/Pau-Arnos.png" alt="Tracé Pau-Arnos" class="w-full max-w-sm object-contain" title="Plan du tracé">
+                        <img src="map_circuits/Pau-Arnos.png" alt="Tracé Pau-Arnos" class="w-full max-w-sm object-contain">
                     </div>
                 `;
                 contentPhoto.innerHTML = `<div class="text-center py-20 bg-[#161616] border border-gray-800"><span class="text-5xl mb-4 block">📸</span><p class="text-gray-400 font-bold uppercase">Galerie en préparation</p></div>`;
             }
             else if (nomEvent === 'Caterham & Open Formula' || nomEvent === 'Caterham Cup 2024') {
                 contentDesc.innerHTML = `
-                    <h3 class="text-4xl md:text-5xl font-bold text-red-500 mb-2 font-racing tracking-wide uppercase">Caterham Compétition France</h3>
+                    <h3 class="text-3xl md:text-5xl font-bold text-red-500 mb-2 font-racing tracking-wide uppercase">Caterham Compétition France</h3>
                     <div class="h-1 w-20 bg-red-600 mb-6"></div>
-                    
-                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">
+                    <p class="text-gray-300 mb-4 text-sm md:text-base leading-relaxed">
                         Les plateaux Caterham offrent des courses parmi les plus spectaculaires et disputées en France. Ces véhicules, légers, dépourvus d'aides électroniques et très réactifs, exigent un pilotage tout en glisse et favorisent les batailles en peloton grâce à un phénomène d'aspiration très marqué.
                     </p>
-
                     <div class="bg-[#161616] p-4 md:p-6 mb-8 border-l-4 border-red-600">
                         <h4 class="text-xl md:text-2xl font-bold text-white mb-4 font-racing tracking-wide">FICHE TECHNIQUE</h4>
                         <ul class="list-none text-gray-400 text-sm space-y-2">
@@ -994,33 +939,25 @@
                             <li><strong class="text-gray-300 uppercase">Type de course :</strong> Sprint en peloton compact</li>
                         </ul>
                     </div>
-
                     <h4 class="text-2xl md:text-3xl font-bold text-white mb-4 font-racing uppercase tracking-wider border-b border-gray-800 pb-2">Les Plateaux en piste</h4>
-                    <div class="space-y-6 mb-8">
-                        <ul class="list-disc list-inside text-gray-400 text-sm space-y-2 mb-8">
-                            <li><strong class="text-gray-300">Caterham Academy :</strong> Réservée aux pilotes débutants n'ayant jamais eu de licence compétition.</li>
-                            <li><strong class="text-gray-300">Caterham Roadsport & 340R :</strong> Les catégories intermédiaires, offrant un compromis idéal entre puissance et maîtrise.</li>
-                            <li><strong class="text-gray-300">Caterham 420R :</strong> La catégorie reine, avec les modèles les plus puissants équipés de boîtes séquentielles.</li>
-                            <li><strong class="text-gray-300">Open Formula Series / Legends Cars :</strong> Plateaux invités fréquents pour compléter le programme.</li>
-                        </ul>
-                    </div>
-
+                    <ul class="list-disc list-inside text-gray-400 text-sm space-y-2 mb-8">
+                        <li><strong class="text-gray-300">Caterham Academy :</strong> Réservée aux pilotes débutants n'ayant jamais eu de licence compétition.</li>
+                        <li><strong class="text-gray-300">Caterham Roadsport & 340R :</strong> Les catégories intermédiaires, offrant un compromis idéal entre puissance et maîtrise.</li>
+                    </ul>
                     <h4 class="text-2xl md:text-3xl font-bold text-white mb-4 font-racing uppercase tracking-wider border-b border-gray-800 pb-2">Caractéristiques du tracé</h4>
                     <div class="mb-6 bg-white p-2 md:p-4 flex justify-center border-4 border-gray-800">
-                        <img src="map_circuits/Pau-Arnos.png" alt="Tracé Pau-Arnos" class="w-full max-w-sm object-contain" title="Plan du tracé">
+                        <img src="map_circuits/Pau-Arnos.png" alt="Tracé Pau-Arnos" class="w-full max-w-sm object-contain">
                     </div>
                 `;
                 contentPhoto.innerHTML = `<div class="text-center py-20 bg-[#161616] border border-gray-800"><span class="text-5xl mb-4 block">📸</span><p class="text-gray-400 font-bold uppercase">Galerie en préparation</p></div>`;
             }
             else if (nomEvent === 'Pau GP 2023') {
                 contentDesc.innerHTML = `
-                    <h3 class="text-4xl md:text-5xl font-bold text-red-500 mb-2 font-racing tracking-wide uppercase">Pau Grand Prix</h3>
+                    <h3 class="text-3xl md:text-5xl font-bold text-red-500 mb-2 font-racing tracking-wide uppercase">Pau Grand Prix</h3>
                     <div class="h-1 w-20 bg-red-600 mb-6"></div>
-                    
-                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">
-                        Le Grand Prix de Pau est l'une des courses sur circuit urbain les plus anciennes et les plus prestigieuses au monde (après Monaco). Le tracé sinueux et étroit au cœur de la ville ne pardonne aucune erreur, frôlant les trottoirs et les rails de sécurité à des vitesses impressionnantes. L'édition 2023 a mis en avant les nouvelles énergies et les formules de promotion.
+                    <p class="text-gray-300 mb-4 text-sm md:text-base leading-relaxed">
+                        Le Grand Prix de Pau est l'une des courses sur circuit urbain les plus anciennes et les plus prestigieuses au monde (après Monaco). Le tracé sinueux et étroit au cœur de la ville ne pardonne aucune erreur, frôlant les trottoirs et les rails de sécurité à des vitesses impressionnantes.
                     </p>
-
                     <div class="bg-[#161616] p-4 md:p-6 mb-8 border-l-4 border-red-600">
                         <h4 class="text-xl md:text-2xl font-bold text-white mb-4 font-racing tracking-wide">FICHE TECHNIQUE</h4>
                         <ul class="list-none text-gray-400 text-sm space-y-2">
@@ -1030,37 +967,26 @@
                             <li><strong class="text-gray-300 uppercase">Organisateur :</strong> ASAC Basco-Béarnais</li>
                         </ul>
                     </div>
-
                     <h4 class="text-2xl md:text-3xl font-bold text-white mb-4 font-racing uppercase tracking-wider border-b border-gray-800 pb-2">Les Plateaux en piste</h4>
-                    <div class="space-y-6 mb-8">
-                        <ul class="list-disc list-inside text-gray-400 text-sm space-y-2 mb-8">
-                            <li><strong class="text-gray-300">Championnat de France FFSA F4 :</strong> Les espoirs de la monoplace française.</li>
-                            <li><strong class="text-gray-300">TCR Europe :</strong> La très disputée catégorie des berlines de tourisme internationales.</li>
-                            <li><strong class="text-gray-300">Coupe de France Sprint Car (Twingo Cup) :</strong> Batailles spectaculaires en ville.</li>
-                            <li><strong class="text-gray-300">Sprint Cup by Funyo :</strong> Petits prototypes ouverts et rapides.</li>
-                        </ul>
-                    </div>
-
+                    <ul class="list-disc list-inside text-gray-400 text-sm space-y-2 mb-8">
+                        <li><strong class="text-gray-300">Championnat de France FFSA F4 :</strong> Les espoirs de la monoplace française.</li>
+                        <li><strong class="text-gray-300">TCR Europe :</strong> La très disputée catégorie des berlines de tourisme internationales.</li>
+                        <li><strong class="text-gray-300">Coupe de France Sprint Car (Twingo Cup) :</strong> Batailles spectaculaires en ville.</li>
+                    </ul>
                     <h4 class="text-2xl md:text-3xl font-bold text-white mb-4 font-racing uppercase tracking-wider border-b border-gray-800 pb-2">Caractéristiques du tracé</h4>
                     <div class="mb-6 bg-white p-2 md:p-4 flex justify-center border-4 border-gray-800">
-                        <img src="map_circuits/Pau-ville.jpg" alt="Tracé Urbain Pau" class="w-full max-w-sm object-contain" title="Plan du tracé urbain" onerror="this.src='map_circuits/Pau-Arnos.png'"> 
+                        <img src="map_circuits/Pau-ville.jpg" alt="Tracé Urbain Pau" class="w-full max-w-sm object-contain">
                     </div>
-                    <ul class="list-disc list-inside text-gray-400 text-sm space-y-2 mb-8">
-                        <li><strong class="text-gray-300">Spécificité Urbaine :</strong> Piste étroite, rails omniprésents, aucun dégagement.</li>
-                        <li><strong class="text-gray-300">Points clés :</strong> Le virage de la Gare, l'épingle du Lycée, la montée de l'Avenue Gaston Lacoste.</li>
-                    </ul>
                 `;
                 contentPhoto.innerHTML = `<div class="text-center py-20 bg-[#161616] border border-gray-800"><span class="text-5xl mb-4 block">📸</span><p class="text-gray-400 font-bold uppercase">Galerie en préparation</p></div>`;
             }
             else if (nomEvent === 'Pau GP Classic 2023') {
                 contentDesc.innerHTML = `
-                    <h3 class="text-4xl md:text-5xl font-bold text-red-500 mb-2 font-racing tracking-wide uppercase">Pau Classic Grand Prix</h3>
+                    <h3 class="text-3xl md:text-5xl font-bold text-red-500 mb-2 font-racing tracking-wide uppercase">Pau Classic Grand Prix</h3>
                     <div class="h-1 w-20 bg-red-600 mb-6"></div>
-                    
-                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">
-                        Le Pau Classic Grand Prix ressuscite l'âge d'or du sport automobile sur le tracé mythique de la ville de Pau. Les monoplaces et véhicules historiques de légende retrouvent le bitume urbain pour des courses où la sonorité des moteurs d'époque résonne entre les immeubles, offrant un spectacle visuel et auditif unique.
+                    <p class="text-gray-300 mb-4 text-sm md:text-base leading-relaxed">
+                        Le Pau Classic Grand Prix ressuscite l'âge d'or du sport automobile sur le tracé mythique de la ville de Pau. Les monoplaces et véhicules historiques de légende retrouvent le bitume urbain pour des courses où la sonorité des moteurs d'époque résonne entre les immeubles.
                     </p>
-
                     <div class="bg-[#161616] p-4 md:p-6 mb-8 border-l-4 border-red-600">
                         <h4 class="text-xl md:text-2xl font-bold text-white mb-4 font-racing tracking-wide">FICHE TECHNIQUE</h4>
                         <ul class="list-none text-gray-400 text-sm space-y-2">
@@ -1070,33 +996,26 @@
                             <li><strong class="text-gray-300 uppercase">Organisateur :</strong> ASAC Basco-Béarnais & HVM Racing</li>
                         </ul>
                     </div>
-
                     <h4 class="text-2xl md:text-3xl font-bold text-white mb-4 font-racing uppercase tracking-wider border-b border-gray-800 pb-2">Les Plateaux en piste</h4>
-                    <div class="space-y-6 mb-8">
-                        <ul class="list-disc list-inside text-gray-400 text-sm space-y-2 mb-8">
-                            <li><strong class="text-gray-300">Trophée Formule Ford Historic :</strong> Les célèbres monoplaces sans ailerons des années 60/70.</li>
-                            <li><strong class="text-gray-300">Trophée F3 Classic / Formule Renault Classic :</strong> L'âge d'or des formules de promotion (années 80/90).</li>
-                            <li><strong class="text-gray-300">Maxi 1300 Series / HTCC :</strong> Les petites bombes et voitures de tourisme historiques (Mini Cooper, Alpine, etc.).</li>
-                            <li><strong class="text-gray-300">FGP (Formule Grand Prix) :</strong> Démonstrations ou courses de monoplaces F1 ou F2 historiques.</li>
-                        </ul>
-                    </div>
-
+                    <ul class="list-disc list-inside text-gray-400 text-sm space-y-2 mb-8">
+                        <li><strong class="text-gray-300">Trophée Formule Ford Historic :</strong> Les célèbres monoplaces sans ailerons des années 60/70.</li>
+                        <li><strong class="text-gray-300">Trophée F3 Classic / Formule Renault Classic :</strong> L'âge d'or des formules de promotion (années 80/90).</li>
+                        <li><strong class="text-gray-300">Maxi 1300 Series / HTCC :</strong> Les petites bombes et voitures de tourisme historiques (Mini Cooper, Alpine, etc.).</li>
+                    </ul>
                     <h4 class="text-2xl md:text-3xl font-bold text-white mb-4 font-racing uppercase tracking-wider border-b border-gray-800 pb-2">Caractéristiques du tracé</h4>
                     <div class="mb-6 bg-white p-2 md:p-4 flex justify-center border-4 border-gray-800">
-                        <img src="map_circuits/Pau-ville.jpg" alt="Tracé Urbain Pau" class="w-full max-w-sm object-contain" title="Plan du tracé urbain" onerror="this.src='map_circuits/Pau-Arnos.png'">
+                        <img src="map_circuits/Pau-ville.jpg" alt="Tracé Urbain Pau" class="w-full max-w-sm object-contain">
                     </div>
                 `;
                 contentPhoto.innerHTML = `<div class="text-center py-20 bg-[#161616] border border-gray-800"><span class="text-5xl mb-4 block">📸</span><p class="text-gray-400 font-bold uppercase">Galerie en préparation</p></div>`;
             }
             else if (nomEvent === 'GP de Saint-Émilion') {
                 contentDesc.innerHTML = `
-                    <h3 class="text-4xl md:text-5xl font-bold text-red-500 mb-2 font-racing tracking-wide uppercase">GP de Saint-Émilion</h3>
+                    <h3 class="text-3xl md:text-5xl font-bold text-red-500 mb-2 font-racing tracking-wide uppercase">GP de Saint-Émilion</h3>
                     <div class="h-1 w-20 bg-red-600 mb-6"></div>
-                    
-                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">
+                    <p class="text-gray-300 mb-4 text-sm md:text-base leading-relaxed">
                         Un événement d'exception célébrant le patrimoine automobile d'avant-guerre (Bugatti, Amilcar, Delage, etc.). Ce Grand Prix se déroule sous forme de démonstration ou de rallye de régularité au cœur des prestigieux vignobles bordelais, alliant élégance, histoire et mécanique d'orfèvrerie.
                     </p>
-
                     <div class="bg-[#161616] p-4 md:p-6 mb-8 border-l-4 border-red-600">
                         <h4 class="text-xl md:text-2xl font-bold text-white mb-4 font-racing tracking-wide">FICHE TECHNIQUE</h4>
                         <ul class="list-none text-gray-400 text-sm space-y-2">
@@ -1104,42 +1023,26 @@
                             <li><strong class="text-gray-300 uppercase">Lieu :</strong> Saint-Émilion (Gironde) ${btnCarte('Saint-Emilion, Gironde')}</li>
                         </ul>
                     </div>
-
                     <h4 class="text-2xl md:text-3xl font-bold text-white mb-4 font-racing uppercase tracking-wider border-b border-gray-800 pb-2">Les Plateaux en piste</h4>
-                    <div class="space-y-6 mb-8">
-                        <ul class="list-disc list-inside text-gray-400 text-sm space-y-2 mb-8">
-                            <li><strong class="text-gray-300">Course / Sport 1920-1930 :</strong> Véhicules Grand Prix (Bugatti Type 35, etc.) et voitures de sport (Cyclecars) de l'entre-deux-guerres.</li>
-                        </ul>
-                    </div>
+                    <ul class="list-disc list-inside text-gray-400 text-sm space-y-2 mb-8">
+                        <li><strong class="text-gray-300">Course / Sport 1920-1930 :</strong> Véhicules Grand Prix (Bugatti Type 35, etc.) et voitures de sport (Cyclecars) de l'entre-deux-guerres.</li>
+                    </ul>
                 `;
                 contentPhoto.innerHTML = `<div class="text-center py-20 bg-[#161616] border border-gray-800"><span class="text-5xl mb-4 block">📸</span><p class="text-gray-400 font-bold uppercase">Galerie en préparation</p></div>`;
             }
             else if (nomEvent === 'Rallye d\'Orthez 2023') {
                 contentDesc.innerHTML = `
-                    <h3 class="text-4xl md:text-5xl font-bold text-red-500 mb-2 font-racing tracking-wide uppercase">Rallye d'Orthez-Béarn</h3>
+                    <h3 class="text-3xl md:text-5xl font-bold text-red-500 mb-2 font-racing tracking-wide uppercase">Rallye d'Orthez-Béarn</h3>
                     <div class="h-1 w-20 bg-red-600 mb-6"></div>
-                    
-                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">
-                        Épreuve incontournable du Championnat de France des Rallyes Tout-Terrain. Le Rallye d'Orthez-Béarn se dispute sur des pistes de terre, de gravier et parfois rocailleuses à travers les collines béarnaises, offrant un défi majeur de pilotage et de navigation pour les équipages.
+                    <p class="text-gray-300 mb-4 text-sm md:text-base leading-relaxed">
+                        Épreuve incontournable du Championnat de France des Rallyes Tout-Terrain. Le Rallye d'Orthez-Béarn se dispute sur des pistes de terre, de gravier et parfois rocailleuses à travers les collines béarnaises.
                     </p>
-
                     <div class="bg-[#161616] p-4 md:p-6 mb-8 border-l-4 border-red-600">
                         <h4 class="text-xl md:text-2xl font-bold text-white mb-4 font-racing tracking-wide">FICHE TECHNIQUE</h4>
                         <ul class="list-none text-gray-400 text-sm space-y-2">
                             <li><strong class="text-gray-300 uppercase">Épreuve :</strong> Rallye Tout-Terrain (Spéciales chronométrées)</li>
                             <li><strong class="text-gray-300 uppercase">Lieu :</strong> Région d'Orthez ${btnCarte('Orthez, France')}</li>
                             <li><strong class="text-gray-300 uppercase">Surface :</strong> Terre, chemins agricoles, sous-bois</li>
-                            <li><strong class="text-gray-300 uppercase">Organisateur :</strong> Écurie Orthez Béarn / ASAC Basco-Béarnais</li>
-                        </ul>
-                    </div>
-
-                    <h4 class="text-2xl md:text-3xl font-bold text-white mb-4 font-racing uppercase tracking-wider border-b border-gray-800 pb-2">Les Catégories (Groupes)</h4>
-                    <div class="space-y-6 mb-8">
-                        <ul class="list-disc list-inside text-gray-400 text-sm space-y-2 mb-8">
-                            <li><strong class="text-gray-300">T1A / T1B :</strong> Buggys prototypes 2 ou 4 roues motrices (les plus rapides).</li>
-                            <li><strong class="text-gray-300">T2 / T2B :</strong> Véhicules tout-terrain de série modifiés (ex: Mitsubishi Pajero).</li>
-                            <li><strong class="text-gray-300">SSV (Side by Side Vehicle) :</strong> Buggys légers très agiles (ex: Can-Am, Polaris).</li>
-                            <li><strong class="text-gray-300">T3 / T4 :</strong> Véhicules tout-terrain améliorés (souvent 4x4 traditionnels).</li>
                         </ul>
                     </div>
                 `;
@@ -1147,37 +1050,23 @@
             }
             else if (nomEvent === 'Rallye du Barétous 2023') {
                 contentDesc.innerHTML = `
-                    <h3 class="text-4xl md:text-5xl font-bold text-red-500 mb-2 font-racing tracking-wide uppercase">Rallye du Barétous</h3>
+                    <h3 class="text-3xl md:text-5xl font-bold text-red-500 mb-2 font-racing tracking-wide uppercase">Rallye du Barétous</h3>
                     <div class="h-1 w-20 bg-red-600 mb-6"></div>
-                    
-                    <p class="text-gray-300 mb-4 text-sm leading-relaxed">
-                        Le Rallye du Barétous est une manche réputée du Championnat de France des Rallyes Tout-Terrain. Disputé dans le magnifique cadre de la vallée du Barétous, il propose des spéciales sinueuses, vallonnées, et très techniques avec des passages en sous-bois et sur des crêtes offrant des paysages somptueux, mais punissant la moindre erreur.
+                    <p class="text-gray-300 mb-4 text-sm md:text-base leading-relaxed">
+                        Le Rallye du Barétous est une manche réputée du Championnat de France des Rallyes Tout-Terrain. Disputé dans le magnifique cadre de la vallée du Barétous, il propose des spéciales sinueuses et vallonnées.
                     </p>
-
                     <div class="bg-[#161616] p-4 md:p-6 mb-8 border-l-4 border-red-600">
                         <h4 class="text-xl md:text-2xl font-bold text-white mb-4 font-racing tracking-wide">FICHE TECHNIQUE</h4>
                         <ul class="list-none text-gray-400 text-sm space-y-2">
                             <li><strong class="text-gray-300 uppercase">Épreuve :</strong> Rallye Tout-Terrain</li>
                             <li><strong class="text-gray-300 uppercase">Lieu :</strong> Lanne-en-Barétous, Aramits ${btnCarte('Lanne-en-Baretous')}</li>
-                            <li><strong class="text-gray-300 uppercase">Surface :</strong> Terre, pistes forestières, zones empierrées</li>
-                            <li><strong class="text-gray-300 uppercase">Organisateur :</strong> Écurie des Cimes / ASAC Basco-Béarnais</li>
-                        </ul>
-                    </div>
-
-                    <h4 class="text-2xl md:text-3xl font-bold text-white mb-4 font-racing uppercase tracking-wider border-b border-gray-800 pb-2">Les Catégories (Groupes)</h4>
-                    <div class="space-y-6 mb-8">
-                        <ul class="list-disc list-inside text-gray-400 text-sm space-y-2 mb-8">
-                            <li><strong class="text-gray-300">Championnat de France :</strong> Buggys T1, 4x4 T2.</li>
-                            <li><strong class="text-gray-300">Challenge SSV :</strong> Les engins légers et performants très adaptés aux pistes étroites.</li>
-                            <li><strong class="text-gray-300">Trophée 4x4 :</strong> Dédié aux véhicules historiques ou 4x4 traditionnels.</li>
                         </ul>
                     </div>
                 `;
                 contentPhoto.innerHTML = `<div class="text-center py-20 bg-[#161616] border border-gray-800"><span class="text-5xl mb-4 block">📸</span><p class="text-gray-400 font-bold uppercase">Galerie en préparation</p></div>`;
             }
             else {
-                // FALLBACK DE SÉCURITÉ POUR LES AUTRES ÉVÉNEMENTS NON LISTÉS
-                contentDesc.innerHTML = `<div class="text-center py-16"><h4 class="text-4xl md:text-5xl font-bold text-red-500 mb-4 font-racing tracking-wider uppercase">${nomEvent}</h4><p class="text-gray-400 font-bold uppercase">Fiche en cours</p></div>`;
+                contentDesc.innerHTML = `<div class="text-center py-16"><h4 class="text-3xl md:text-5xl font-bold text-red-500 mb-4 font-racing tracking-wider uppercase">${nomEvent}</h4><p class="text-gray-400 font-bold uppercase">Fiche en cours</p></div>`;
                 contentPhoto.innerHTML = `<div class="text-center py-20 bg-[#161616] border border-gray-800 mt-4"><p class="text-gray-400 font-bold uppercase">Galerie en préparation</p></div>`;
             }
 
@@ -1197,7 +1086,7 @@
                 alertOverlay.classList.add('hidden');
             }, 300);
             
-            if(document.getElementById('lightbox').classList.contains('hidden')){
+            if (document.getElementById('lightbox').classList.contains('hidden')) {
                 document.body.style.overflow = 'auto';
             }
         }
