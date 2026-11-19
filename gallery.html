@@ -79,7 +79,7 @@
         </button>
     </div>
 
-    <!-- SECTION GALERIE CENTRÉE (EFFET MASONRY) -->
+    <!-- SECTION GALERIE CENTRÉE -->
     <section class="flex-grow pt-40 md:pt-48 pb-20 w-full relative z-10 overflow-hidden">
         
         <div class="max-w-6xl mx-auto px-4 sm:px-6 w-full flex flex-col items-center">
@@ -90,74 +90,70 @@
                 <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold inline-block border-l-4 border-r-4 border-red-600 px-6 md:px-8 uppercase tracking-wider text-white font-racing bg-black bg-opacity-40 rounded-xl py-2 shadow-2xl">Galerie <span class="text-gray-500">Photos & Vidéos</span></h2>
             </div>
 
-            <!-- GRILLE MASONRY CENTRÉE 3 COLONNES -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8 w-full items-start" id="gallery-grid">
-                
-                <!-- Colonne 1 -->
-                <div class="flex flex-col gap-6 md:gap-8 w-full">
-                    <div class="w-full aspect-[4/3] bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container" onclick="ouvrirMedia(this)">
-                        <video preload="metadata" poster="photos-albi/albi1.jpg" autoplay loop muted playsinline class="w-full h-full object-cover media-element pointer-events-none transition-transform duration-700 ease-in-out group-hover:scale-105">
-                            <source src="photos-albi/albi4.mp4" type="video/mp4">
-                        </video>
-                        <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
-                    </div>
-
-                    <div class="w-full aspect-[3/4] bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container" onclick="ouvrirMedia(this)">
-                        <img src="photos_commissaire/header 2.jpg" alt="Drapeau bleu" class="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-105 media-element">
-                        <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
-                    </div>
-
-                    <div class="w-full aspect-[4/3] bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container" onclick="ouvrirMedia(this)">
-                        <img src="photos-albi/albi3.jpg" alt="Albi 3" class="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-105 media-element">
-                        <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
-                    </div>
-                </div>
-
-                <!-- Colonne 2 (décalée en quinconce) -->
-                <div class="flex flex-col gap-6 md:gap-8 w-full md:mt-8">
-                    <div class="w-full aspect-[3/4] bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container" onclick="ouvrirMedia(this)">
-                        <img src="photos_commissaire/header 1.jpg" alt="Action piste" class="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-105 media-element">
-                        <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
-                    </div>
-
-                    <div class="w-full aspect-[4/3] bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container" onclick="ouvrirMedia(this)">
-                        <img src="photos-albi/albi2.jpg" alt="Albi 2" class="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-105 media-element">
-                        <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
-                    </div>
-
-                    <div class="w-full aspect-[3/4] bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container" onclick="ouvrirMedia(this)">
-                        <img src="photos_commissaire/header 3.jpg" alt="Safety Car" class="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-105 media-element">
-                        <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
-                    </div>
-                </div>
-
-                <!-- Colonne 3 -->
-                <div class="flex flex-col gap-6 md:gap-8 w-full">
-                    <div class="w-full aspect-square bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container" onclick="ouvrirMedia(this)">
-                        <img src="photos-albi/albi1.jpg" alt="Albi 1" class="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-105 media-element">
-                        <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
-                    </div>
-
-                    <div class="w-full aspect-[3/4] bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container" onclick="ouvrirMedia(this)">
-                        <img src="photos_commissaire/about.jpg" alt="En tenue" class="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-105 media-element">
-                        <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
-                    </div>
-
-                    <div class="w-full aspect-[3/4] bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container" onclick="ouvrirMedia(this)">
-                        <img src="photos-motos/départ-fsbk.jpg" alt="Départ FSBK" class="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-105 media-element">
-                        <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
-                    </div>
-                </div>
-
-            </div>
+            <!-- GRILLE STRICTE 3 COLONNES CENTRÉE (POSITIONNEMENT ALÉATOIRE AU RECHARGEMENT) -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8 w-full" id="gallery-grid"></div>
         </div>
 
     </section>
 
-    <!-- SCRIPTS POUR LA LIGHTBOX -->
+    <!-- SCRIPTS POUR LA GALERIE ALÉATOIRE ET LA LIGHTBOX -->
     <script>
         let galerieActuelle = [];
         let indexMediaActuel = 0;
+
+        function melangerAleatoirement(liste) {
+            const copie = [...liste];
+            for (let i = copie.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [copie[i], copie[j]] = [copie[j], copie[i]];
+            }
+            return copie;
+        }
+
+        function initialiserGalerieAleatoire() {
+            const grille = document.getElementById('gallery-grid');
+            if (!grille) return;
+
+            const medias = [
+                { type: 'video', src: 'photos-albi/albi4.mp4', poster: 'photos-albi/albi1.jpg' },
+                { type: 'img', src: 'photos_commissaire/header 1.jpg', alt: 'Action piste' },
+                { type: 'img', src: 'photos-albi/albi1.jpg', alt: 'Albi 1' },
+                { type: 'img', src: 'photos_commissaire/header 2.jpg', alt: 'Drapeau bleu' },
+                { type: 'img', src: 'photos-albi/albi2.jpg', alt: 'Albi 2' },
+                { type: 'img', src: 'photos_commissaire/about.jpg', alt: 'En tenue' },
+                { type: 'img', src: 'photos-albi/albi3.jpg', alt: 'Albi 3' },
+                { type: 'img', src: 'photos_commissaire/header 3.jpg', alt: 'Safety Car' },
+                { type: 'img', src: 'photos-motos/départ-fsbk.jpg', alt: 'Départ FSBK' },
+                { type: 'img', src: 'photos_arnos1/arnos1.jpg', alt: 'Arnos 1' },
+                { type: 'video', src: 'photos_arnos1/arnos16.mp4', poster: 'photos_arnos1/arnos1.jpg' }
+            ];
+
+            grille.innerHTML = '';
+            melangerAleatoirement(medias).forEach(media => {
+                const carte = document.createElement('div');
+                carte.className = 'w-full aspect-[4/3] bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container';
+                carte.setAttribute('onclick', 'ouvrirMedia(this)');
+
+                if (media.type === 'video') {
+                    carte.innerHTML = `
+                        <video preload="metadata" poster="${media.poster}" autoplay loop muted playsinline class="w-full h-full object-cover media-element pointer-events-none transition-transform duration-700 ease-in-out group-hover:scale-105">
+                            <source src="${media.src}" type="video/mp4">
+                        </video>
+                        <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
+                    `;
+                } else {
+                    carte.innerHTML = `
+                        <img src="${media.src}" alt="${media.alt}" class="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-105 media-element">
+                        <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
+                    `;
+                }
+                grille.appendChild(carte);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initialiserGalerieAleatoire();
+        });
 
         function ouvrirMedia(element) {
             const grille = document.getElementById('gallery-grid');
