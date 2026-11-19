@@ -13,6 +13,19 @@
             if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
             window.scrollTo(0, 0);
         }
+
+        function gererErreurFsbk(img) {
+            if (!img.dataset.fallbackStep) {
+                img.dataset.fallbackStep = '1';
+                img.src = 'photos-motos/d%C3%A9part-fsbk.jpg';
+            } else if (img.dataset.fallbackStep === '1') {
+                img.dataset.fallbackStep = '2';
+                img.src = 'photos-motos/depart-fsbk.jpg';
+            } else if (img.dataset.fallbackStep === '2') {
+                img.dataset.fallbackStep = '3';
+                img.src = 'photos-motos/d%C3%A9part-fsbk.JPG';
+            }
+        }
     </script>
     <style>
         :root {
@@ -136,7 +149,7 @@
                 </div>
                 
                 <div class="w-full aspect-[4/3] bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container" onclick="ouvrirMedia(this)">
-                    <img src="photos-motos/départ-fsbk.jpg" alt="Départ FSBK" class="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-105 media-element">
+                    <img src="photos-motos/départ-fsbk.jpg" onerror="gererErreurFsbk(this)" alt="Départ FSBK" class="w-full h-full object-cover object-center transition-transform duration-700 ease-in-out group-hover:scale-105 media-element">
                     <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
                 </div>
 
