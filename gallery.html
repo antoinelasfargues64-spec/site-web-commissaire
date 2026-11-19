@@ -7,7 +7,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Teko:wght@400;600;700&family=Inter:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
     <script>
-        // Redirige vers l'accueil si la page est actualisée (Refresh)
         if (performance.getEntriesByType("navigation")[0] && performance.getEntriesByType("navigation")[0].type === "reload") {
             window.location.href = "index.html";
         } else {
@@ -21,9 +20,7 @@
             --dark-bg: #0a0a0a;
         }
         
-        html, body {
-            overflow-x: hidden; /* Coupe la barre de défilement horizontale */
-        }
+        html, body { overflow-x: hidden; }
 
         body { 
             font-family: 'Inter', sans-serif; 
@@ -34,7 +31,6 @@
             background-size: 30px 30px;
         }
 
-        /* Couleur de sélection du texte */
         ::selection { background-color: var(--racing-red); color: #ffffff; }
         ::-moz-selection { background-color: var(--racing-red); color: #ffffff; }
 
@@ -47,21 +43,26 @@
         .media-container img, .media-container video {
             backface-visibility: hidden;
             transform: translateZ(0);
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
     </style>
 </head>
 <body class="antialiased min-h-screen flex flex-col">
 
     <!-- MENU DE NAVIGATION -->
-    <nav class="fixed top-0 w-full z-50 flex justify-end p-4 md:p-6 md:px-12 pointer-events-none">
-        <div class="flex gap-4 md:gap-8 pointer-events-auto bg-black bg-opacity-50 p-3 md:p-4 rounded-lg backdrop-blur-sm border border-gray-800">
-            <a href="index.html" class="nav-link text-white hover:text-red-500 font-racing text-lg md:text-2xl tracking-widest transition-colors uppercase">Accueil</a>
-            <a href="about.html" class="nav-link text-white hover:text-red-500 font-racing text-lg md:text-2xl tracking-widest transition-colors uppercase">À propos</a>
-            <a href="gallery.html" class="nav-link active text-white hover:text-red-500 font-racing text-lg md:text-2xl tracking-widest transition-colors uppercase">Galerie</a>
+    <nav class="fixed top-0 w-full z-50 pointer-events-none">
+        <div class="max-w-7xl mx-auto w-full flex justify-end p-4 md:p-6 md:px-8">
+            <div class="flex gap-4 md:gap-8 pointer-events-auto bg-black bg-opacity-60 p-3 md:p-4 rounded-lg backdrop-blur-md border border-gray-800 shadow-xl">
+                <a href="index.html" class="nav-link text-white hover:text-red-500 font-racing text-lg md:text-2xl tracking-widest transition-colors uppercase">Accueil</a>
+                <a href="about.html" class="nav-link text-white hover:text-red-500 font-racing text-lg md:text-2xl tracking-widest transition-colors uppercase">À propos</a>
+                <a href="gallery.html" class="nav-link active text-white hover:text-red-500 font-racing text-lg md:text-2xl tracking-widest transition-colors uppercase">Galerie</a>
+            </div>
         </div>
     </nav>
 
-    <!-- LIGHTBOX (Visionneuse plein écran) -->
+    <!-- LIGHTBOX -->
     <div id="lightbox" class="fixed inset-0 bg-black bg-opacity-95 z-[150] hidden flex-col justify-center items-center opacity-0 transition-opacity duration-300">
         <button onclick="fermerImage()" class="absolute top-6 right-6 text-gray-500 hover:text-white transition-colors focus:outline-none z-[160] p-2">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 md:h-12 md:w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12" /></svg>
@@ -78,66 +79,64 @@
         </button>
     </div>
 
-    <!-- SECTION GALERIE CENTRÉE PAR RAPPORT AU TITRE -->
-    <section class="flex-grow py-32 px-4 sm:px-8 md:px-12 w-full relative z-10 flex flex-col items-center">
+    <!-- SECTION GALERIE CENTRÉE -->
+    <section class="flex-grow pt-40 md:pt-48 pb-20 w-full relative z-10 overflow-hidden">
         
-        <div class="w-full max-w-[1600px] flex flex-col items-center">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 w-full flex flex-col items-center">
             
-            <div class="mb-16 relative pt-12 text-center w-full">
-                <div class="text-[3rem] sm:text-[7rem] md:text-[9rem] lg:text-[9rem] font-bold text-gray-400 opacity-5 absolute top-0 left-1/2 -translate-x-1/2 -z-10 tracking-tighter select-none leading-none whitespace-nowrap">SNAPSHOTS</div>
-                <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold inline-block border-l-4 border-r-4 border-red-600 px-4 md:px-6 uppercase tracking-wider relative z-10 text-white font-racing">Galerie <span class="text-gray-500">Photos & Vidéos</span></h2>
+            <!-- TITRE -->
+            <div class="mb-16 md:mb-24 relative flex justify-center items-center w-full">
+                <div class="hidden sm:block text-[5rem] md:text-[8rem] lg:text-[10rem] font-bold text-gray-400 opacity-5 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 -z-10 tracking-tighter select-none whitespace-nowrap">SNAPSHOTS</div>
+                <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold inline-block border-l-4 border-r-4 border-red-600 px-6 md:px-8 uppercase tracking-wider text-white font-racing bg-black bg-opacity-40 rounded-xl py-2 shadow-2xl">Galerie <span class="text-gray-500">Photos & Vidéos</span></h2>
             </div>
 
-            <!-- GRILLE CENTRÉE SOUS LE TITRE -->
-            <div class="mx-auto w-full max-w-7xl columns-1 sm:columns-2 md:columns-3 lg:columns-4 xl:columns-5 gap-4 md:gap-6 masonry-grid text-center">
+            <!-- GRILLE STRICTE 3 COLONNES (3x3 = 9 éléments) -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8 w-full" id="gallery-grid">
                 
-                <!-- Vidéo d'introduction -->
-                <div class="inline-block w-full break-inside-avoid mb-4 md:mb-6 bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container text-left" onclick="ouvrirMedia(this)">
-                    <video preload="metadata" poster="photos-albi/albi1.jpg" autoplay loop muted playsinline class="w-full h-auto object-cover media-element pointer-events-none group-hover:scale-105 transition-transform duration-700 ease-in-out">
+                <div class="w-full aspect-[4/3] bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container" onclick="ouvrirMedia(this)">
+                    <video preload="metadata" poster="photos-albi/albi1.jpg" autoplay loop muted playsinline class="w-full h-full object-cover media-element pointer-events-none transition-transform duration-700 ease-in-out group-hover:scale-105">
                         <source src="photos-albi/albi4.mp4" type="video/mp4">
                     </video>
                     <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
                 </div>
 
-                <!-- Photos -->
-                <div class="inline-block w-full break-inside-avoid mb-4 md:mb-6 bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container text-left" onclick="ouvrirMedia(this)">
-                    <img src="photos_commissaire/header 1.jpg" alt="Action piste" class="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out media-element">
+                <div class="w-full aspect-[4/3] bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container" onclick="ouvrirMedia(this)">
+                    <img src="photos_commissaire/header 1.jpg" alt="Action piste" class="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-105 media-element">
                     <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
                 </div>
 
-                <div class="inline-block w-full break-inside-avoid mb-4 md:mb-6 bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container text-left" onclick="ouvrirMedia(this)">
-                    <img src="photos-albi/albi1.jpg" alt="Albi 1" class="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out media-element">
+                <div class="w-full aspect-[4/3] bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container" onclick="ouvrirMedia(this)">
+                    <img src="photos-albi/albi1.jpg" alt="Albi 1" class="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-105 media-element">
                     <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
                 </div>
 
-                <div class="inline-block w-full break-inside-avoid mb-4 md:mb-6 bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container text-left" onclick="ouvrirMedia(this)">
-                    <img src="photos_commissaire/header 2.jpg" alt="Drapeau bleu" class="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out media-element">
+                <div class="w-full aspect-[4/3] bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container" onclick="ouvrirMedia(this)">
+                    <img src="photos_commissaire/header 2.jpg" alt="Drapeau bleu" class="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-105 media-element">
                     <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
                 </div>
 
-                <div class="inline-block w-full break-inside-avoid mb-4 md:mb-6 bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container text-left" onclick="ouvrirMedia(this)">
-                    <img src="photos-albi/albi2.jpg" alt="Albi 2" class="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out media-element">
+                <div class="w-full aspect-[4/3] bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container" onclick="ouvrirMedia(this)">
+                    <img src="photos-albi/albi2.jpg" alt="Albi 2" class="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-105 media-element">
                     <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
                 </div>
 
-                <div class="inline-block w-full break-inside-avoid mb-4 md:mb-6 bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container text-left" onclick="ouvrirMedia(this)">
-                    <img src="photos_commissaire/about.jpg" alt="En tenue" class="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out media-element">
+                <div class="w-full aspect-[4/3] bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container" onclick="ouvrirMedia(this)">
+                    <img src="photos_commissaire/about.jpg" alt="En tenue" class="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-105 media-element">
                     <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
                 </div>
 
-                <div class="inline-block w-full break-inside-avoid mb-4 md:mb-6 bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container text-left" onclick="ouvrirMedia(this)">
-                    <img src="photos-albi/albi3.jpg" alt="Albi 3" class="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out media-element">
+                <div class="w-full aspect-[4/3] bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container" onclick="ouvrirMedia(this)">
+                    <img src="photos-albi/albi3.jpg" alt="Albi 3" class="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-105 media-element">
                     <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
                 </div>
                 
-                <div class="inline-block w-full break-inside-avoid mb-4 md:mb-6 bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container text-left" onclick="ouvrirMedia(this)">
-                    <img src="photos_commissaire/header 3.jpg" alt="Safety Car" class="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out media-element">
+                <div class="w-full aspect-[4/3] bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container" onclick="ouvrirMedia(this)">
+                    <img src="photos_commissaire/header 3.jpg" alt="Safety Car" class="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-105 media-element">
                     <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
                 </div>
                 
-                <!-- Photo Moto intégrée -->
-                <div class="inline-block w-full break-inside-avoid mb-4 md:mb-6 bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container text-left" onclick="ouvrirMedia(this)">
-                    <img src="photos-motos/départ-fsbk.jpg" alt="Départ FSBK" class="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out media-element" onerror="this.style.display='none'">
+                <div class="w-full aspect-[4/3] bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container" onclick="ouvrirMedia(this)">
+                    <img src="photos-motos/départ-fsbk.jpg" alt="Départ FSBK" class="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-105 media-element">
                     <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
                 </div>
 
@@ -146,17 +145,17 @@
 
     </section>
 
-    <!-- SCRIPTS POUR LA LIGHTBOX MIXTE -->
+    <!-- SCRIPTS POUR LA LIGHTBOX -->
     <script>
         let galerieActuelle = [];
         let indexMediaActuel = 0;
 
         function ouvrirMedia(element) {
-            const grille = element.closest('.masonry-grid') || element.closest('.grid');
+            const grille = document.getElementById('gallery-grid');
             const mediaNodes = grille.querySelectorAll('.media-element');
             
             galerieActuelle = Array.from(mediaNodes).map(node => {
-                if(node.tagName.toLowerCase() === 'video') return { type: 'video', src: node.querySelector('source').src };
+                if (node.tagName.toLowerCase() === 'video') return { type: 'video', src: node.querySelector('source').src };
                 return { type: 'img', src: node.src };
             });
 
@@ -188,7 +187,7 @@
                 vidEl.load();
                 let playPromise = vidEl.play();
                 if (playPromise !== undefined) {
-                    playPromise.catch(error => { console.log("Lancement auto bloqué, attente action utilisateur."); });
+                    playPromise.catch(() => {});
                 }
             } else {
                 vidEl.classList.add('hidden');
