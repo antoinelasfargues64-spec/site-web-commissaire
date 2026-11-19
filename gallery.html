@@ -92,7 +92,7 @@
         </button>
     </div>
 
-    <!-- SECTION GALERIE CENTRÉE -->
+    <!-- SECTION GALERIE CENTRÉE (EFFET MASONRY CENTRÉ) -->
     <section class="flex-grow pt-40 md:pt-48 pb-20 w-full relative z-10 overflow-hidden">
         
         <div class="max-w-6xl mx-auto px-4 sm:px-6 w-full flex flex-col items-center">
@@ -103,54 +103,63 @@
                 <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold inline-block border-l-4 border-r-4 border-red-600 px-6 md:px-8 uppercase tracking-wider text-white font-racing bg-black bg-opacity-40 rounded-xl py-2 shadow-2xl">Galerie <span class="text-gray-500">Photos & Vidéos</span></h2>
             </div>
 
-            <!-- GRILLE STRICTE 3 COLONNES (CSS GRID CENTRÉE) -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8 w-full" id="gallery-grid">
+            <!-- GRILLE MASONRY CENTRÉE 3 COLONNES -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8 w-full items-start" id="gallery-grid">
                 
-                <div class="w-full aspect-[4/3] bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container" onclick="ouvrirMedia(this)">
-                    <video preload="metadata" poster="photos-albi/albi1.jpg" autoplay loop muted playsinline class="w-full h-full object-cover media-element pointer-events-none transition-transform duration-700 ease-in-out group-hover:scale-105">
-                        <source src="photos-albi/albi4.mp4" type="video/mp4">
-                    </video>
-                    <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
+                <!-- Colonne 1 -->
+                <div class="flex flex-col gap-6 md:gap-8 w-full">
+                    <div class="w-full aspect-[4/3] bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container" onclick="ouvrirMedia(this)">
+                        <video preload="metadata" poster="photos-albi/albi1.jpg" autoplay loop muted playsinline class="w-full h-full object-cover media-element pointer-events-none transition-transform duration-700 ease-in-out group-hover:scale-105">
+                            <source src="photos-albi/albi4.mp4" type="video/mp4">
+                        </video>
+                        <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
+                    </div>
+
+                    <div class="w-full aspect-[3/4] bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container" onclick="ouvrirMedia(this)">
+                        <img src="photos_commissaire/header 2.jpg" alt="Drapeau bleu" class="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-105 media-element">
+                        <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
+                    </div>
+
+                    <div class="w-full aspect-[4/3] bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container" onclick="ouvrirMedia(this)">
+                        <img src="photos-albi/albi3.jpg" alt="Albi 3" class="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-105 media-element">
+                        <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
+                    </div>
                 </div>
 
-                <div class="w-full aspect-[4/3] bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container" onclick="ouvrirMedia(this)">
-                    <img src="photos_commissaire/header 1.jpg" alt="Action piste" class="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-105 media-element">
-                    <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
+                <!-- Colonne 2 -->
+                <div class="flex flex-col gap-6 md:gap-8 w-full">
+                    <div class="w-full aspect-[3/4] bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container" onclick="ouvrirMedia(this)">
+                        <img src="photos_commissaire/header 1.jpg" alt="Action piste" class="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-105 media-element">
+                        <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
+                    </div>
+
+                    <div class="w-full aspect-[4/3] bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container" onclick="ouvrirMedia(this)">
+                        <img src="photos-albi/albi2.jpg" alt="Albi 2" class="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-105 media-element">
+                        <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
+                    </div>
+
+                    <div class="w-full aspect-[3/4] bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container" onclick="ouvrirMedia(this)">
+                        <img src="photos_commissaire/header 3.jpg" alt="Safety Car" class="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-105 media-element">
+                        <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
+                    </div>
                 </div>
 
-                <div class="w-full aspect-[4/3] bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container" onclick="ouvrirMedia(this)">
-                    <img src="photos-albi/albi1.jpg" alt="Albi 1" class="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-105 media-element">
-                    <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
-                </div>
+                <!-- Colonne 3 -->
+                <div class="flex flex-col gap-6 md:gap-8 w-full">
+                    <div class="w-full aspect-square bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container" onclick="ouvrirMedia(this)">
+                        <img src="photos-albi/albi1.jpg" alt="Albi 1" class="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-105 media-element">
+                        <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
+                    </div>
 
-                <div class="w-full aspect-[4/3] bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container" onclick="ouvrirMedia(this)">
-                    <img src="photos_commissaire/header 2.jpg" alt="Drapeau bleu" class="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-105 media-element">
-                    <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
-                </div>
+                    <div class="w-full aspect-[3/4] bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container" onclick="ouvrirMedia(this)">
+                        <img src="photos_commissaire/about.jpg" alt="En tenue" class="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-105 media-element">
+                        <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
+                    </div>
 
-                <div class="w-full aspect-[4/3] bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container" onclick="ouvrirMedia(this)">
-                    <img src="photos-albi/albi2.jpg" alt="Albi 2" class="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-105 media-element">
-                    <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
-                </div>
-
-                <div class="w-full aspect-[4/3] bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container" onclick="ouvrirMedia(this)">
-                    <img src="photos_commissaire/about.jpg" alt="En tenue" class="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-105 media-element">
-                    <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
-                </div>
-
-                <div class="w-full aspect-[4/3] bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container" onclick="ouvrirMedia(this)">
-                    <img src="photos-albi/albi3.jpg" alt="Albi 3" class="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-105 media-element">
-                    <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
-                </div>
-                
-                <div class="w-full aspect-[4/3] bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container" onclick="ouvrirMedia(this)">
-                    <img src="photos_commissaire/header 3.jpg" alt="Safety Car" class="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-105 media-element">
-                    <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
-                </div>
-                
-                <div class="w-full aspect-[4/3] bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container" onclick="ouvrirMedia(this)">
-                    <img src="photos-motos/départ-fsbk.jpg" onerror="gererErreurFsbk(this)" alt="Départ FSBK" class="w-full h-full object-cover object-center transition-transform duration-700 ease-in-out group-hover:scale-105 media-element">
-                    <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
+                    <div class="w-full aspect-[3/4] bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container" onclick="ouvrirMedia(this)">
+                        <img src="photos-motos/départ-fsbk.jpg" onerror="gererErreurFsbk(this)" alt="Départ FSBK" class="w-full h-full object-cover object-center transition-transform duration-700 ease-in-out group-hover:scale-105 media-element">
+                        <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
+                    </div>
                 </div>
 
             </div>
