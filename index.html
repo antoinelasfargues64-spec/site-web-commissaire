@@ -24,7 +24,6 @@
             font-family: 'Inter', sans-serif; 
             background-color: var(--dark-bg); 
             color: #f3f4f6; 
-            overflow-x: hidden; 
             background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
             linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
             background-size: 30px 30px;
@@ -158,7 +157,7 @@
         </a>
     </header>
 
-    <!-- SECTION APERÇU GALERIE (EFFET MASONRY) -->
+    <!-- SECTION APERÇU GALERIE (POSITIONNEMENT ALÉATOIRE AU RECHARGEMENT) -->
     <section id="gallery-preview" class="pt-24 pb-12 px-4 sm:px-8 max-w-5xl mx-auto relative z-10 border-b border-gray-900 overflow-hidden">
         <div class="mb-12 relative flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div class="relative pt-10">
@@ -171,48 +170,7 @@
             </a>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 w-full items-start" id="index-masonry-grid">
-            <!-- Colonne 1 -->
-            <div class="flex flex-col gap-4 md:gap-6 w-full">
-                <div class="w-full aspect-[4/3] bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container" onclick="ouvrirMedia(this)">
-                    <video preload="metadata" poster="photos-albi/albi1.jpg" autoplay loop muted playsinline class="media-element pointer-events-none group-hover:scale-105 transition-transform duration-700 ease-in-out">
-                        <source src="photos-albi/albi4.mp4" type="video/mp4">
-                    </video>
-                    <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
-                </div>
-
-                <div class="w-full aspect-[3/4] bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container" onclick="ouvrirMedia(this)">
-                    <img src="photos_commissaire/header 2.jpg" alt="Aperçu drapeau" class="media-element group-hover:scale-105 transition-transform duration-700 ease-in-out">
-                    <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
-                </div>
-            </div>
-
-            <!-- Colonne 2 (décalée en quinconce) -->
-            <div class="flex flex-col gap-4 md:gap-6 w-full lg:mt-8">
-                <div class="w-full aspect-[3/4] bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container" onclick="ouvrirMedia(this)">
-                    <img src="photos_commissaire/header 1.jpg" alt="Aperçu action" class="media-element group-hover:scale-105 transition-transform duration-700 ease-in-out">
-                    <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
-                </div>
-
-                <div class="w-full aspect-[4/3] bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container" onclick="ouvrirMedia(this)">
-                    <img src="photos-albi/albi2.jpg" alt="Aperçu Albi 2" class="media-element group-hover:scale-105 transition-transform duration-700 ease-in-out">
-                    <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
-                </div>
-            </div>
-
-            <!-- Colonne 3 -->
-            <div class="flex flex-col gap-4 md:gap-6 w-full">
-                <div class="w-full aspect-square bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container" onclick="ouvrirMedia(this)">
-                    <img src="photos-albi/albi1.jpg" alt="Aperçu Albi 1" class="media-element group-hover:scale-105 transition-transform duration-700 ease-in-out">
-                    <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
-                </div>
-
-                <div class="w-full aspect-[3/4] bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container" onclick="ouvrirMedia(this)">
-                    <img src="photos-motos/départ-fsbk.jpg" alt="Moto FSBK" class="media-element group-hover:scale-105 transition-transform duration-700 ease-in-out">
-                    <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
-                </div>
-            </div>
-        </div>
+        <div id="index-gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 w-full"></div>
     </section>
 
     <!-- SECTION TEASER "À PROPOS" -->
@@ -512,7 +470,54 @@
     </section>
 
     <script>
+        function melangerAleatoirement(liste) {
+            const copie = [...liste];
+            for (let i = copie.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [copie[i], copie[j]] = [copie[j], copie[i]];
+            }
+            return copie;
+        }
+
+        function initialiserApercuAleatoire() {
+            const grille = document.getElementById('index-gallery-grid');
+            if (!grille) return;
+
+            const medias = [
+                { type: 'video', src: 'photos-albi/albi4.mp4', poster: 'photos-albi/albi1.jpg' },
+                { type: 'img', src: 'photos_commissaire/header 1.jpg', alt: 'Aperçu' },
+                { type: 'img', src: 'photos-albi/albi1.jpg', alt: 'Aperçu' },
+                { type: 'img', src: 'photos_commissaire/header 2.jpg', alt: 'Aperçu' },
+                { type: 'img', src: 'photos_arnos1/arnos1.jpg', alt: 'Arnos 1' },
+                { type: 'img', src: 'photos-motos/départ-fsbk.jpg', alt: 'Moto FSBK' }
+            ];
+
+            grille.innerHTML = '';
+            melangerAleatoirement(medias).forEach(media => {
+                const carte = document.createElement('div');
+                carte.className = 'w-full bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container aspect-[4/3]';
+                carte.setAttribute('onclick', 'ouvrirMedia(this)');
+
+                if (media.type === 'video') {
+                    carte.innerHTML = `
+                        <video preload="metadata" poster="${media.poster}" autoplay loop muted playsinline class="media-element pointer-events-none group-hover:scale-105 transition-transform duration-700 ease-in-out">
+                            <source src="${media.src}" type="video/mp4">
+                        </video>
+                        <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
+                    `;
+                } else {
+                    carte.innerHTML = `
+                        <img src="${media.src}" alt="${media.alt}" class="media-element group-hover:scale-105 transition-transform duration-700 ease-in-out">
+                        <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
+                    `;
+                }
+                grille.appendChild(carte);
+            });
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
+            initialiserApercuAleatoire();
+
             const slides = document.querySelectorAll('.hero-slide');
             let currentSlide = 0;
             if (slides.length > 1) {
@@ -587,7 +592,7 @@
         let indexMediaActuel = 0;
 
         function ouvrirMedia(element) {
-            const grille = element.closest('#index-masonry-grid') || element.closest('.grid') || element.closest('.flex');
+            const grille = element.closest('#index-gallery-grid') || element.closest('.grid') || element.closest('.flex');
             const mediaNodes = grille.querySelectorAll('.media-element');
             
             galerieActuelle = Array.from(mediaNodes).map(node => {
@@ -794,7 +799,16 @@
                         <img src="map_circuits/Pau-Arnos.png" alt="Tracé Pau-Arnos" class="w-full max-w-sm object-contain">
                     </div>
                 `;
-                contentPhoto.innerHTML = `<div class="text-center py-20 bg-[#161616] border border-gray-800"><span class="text-5xl mb-4 block">📸</span><p class="text-gray-400 font-bold uppercase">Galerie en préparation</p></div>`;
+                contentPhoto.innerHTML = `
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-lg media-container aspect-[4/3]" onclick="ouvrirMedia(this)">
+                            <video preload="metadata" autoplay loop muted playsinline class="w-full h-full object-cover media-element pointer-events-none group-hover:scale-105 transition-transform duration-700 ease-in-out">
+                                <source src="photos_arnos1/arnos16.mp4" type="video/mp4">
+                            </video>
+                            <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
+                        </div>
+                    </div>
+                `;
             }
             else if (nomEvent === 'trophee_arnos') {
                 contentDesc.innerHTML = `
