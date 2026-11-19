@@ -24,6 +24,7 @@
             font-family: 'Inter', sans-serif; 
             background-color: var(--dark-bg); 
             color: #f3f4f6; 
+            overflow-x: hidden; 
             background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
             linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
             background-size: 30px 30px;
@@ -52,7 +53,7 @@
             position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
             background: var(--panel-bg); border: 1px solid #2a2a2a; border-top: 4px solid var(--racing-red);
             padding: 1.25rem; z-index: 100; box-shadow: 0 40px 60px -15px rgba(0, 0, 0, 1);
-            display: none; width: 95%; max-width: 900px;
+            display: none; width: 95%; max-width: 900px; overscroll-behavior: contain;
         }
         @media (min-width: 768px) { .custom-alert { padding: 2rem; } }
 
@@ -64,7 +65,7 @@
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #333; }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: var(--racing-red); }
 
-        .tab-content { display: none; }
+        .tab-content { display: none; overscroll-behavior: contain; }
         .tab-content.active { display: block; animation: fadeIn 0.4s ease-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -157,7 +158,7 @@
         </a>
     </header>
 
-    <!-- SECTION APERÇU GALERIE (POSITIONNEMENT ALÉATOIRE AU RECHARGEMENT) -->
+    <!-- SECTION APERÇU GALERIE (EFFET MASONRY + ALÉATOIRE AU RECHARGEMENT) -->
     <section id="gallery-preview" class="pt-24 pb-12 px-4 sm:px-8 max-w-5xl mx-auto relative z-10 border-b border-gray-900 overflow-hidden">
         <div class="mb-12 relative flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div class="relative pt-10">
@@ -170,7 +171,11 @@
             </a>
         </div>
 
-        <div id="index-gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 w-full"></div>
+        <div id="index-masonry-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 w-full items-start">
+            <div class="masonry-col flex flex-col gap-4 md:gap-6 w-full"></div>
+            <div class="masonry-col flex flex-col gap-4 md:gap-6 w-full lg:mt-8"></div>
+            <div class="masonry-col flex flex-col gap-4 md:gap-6 w-full"></div>
+        </div>
     </section>
 
     <!-- SECTION TEASER "À PROPOS" -->
@@ -479,23 +484,23 @@
             return copie;
         }
 
-        function initialiserApercuAleatoire() {
-            const grille = document.getElementById('index-gallery-grid');
-            if (!grille) return;
+        function initialiserApercuMasonryAleatoire() {
+            const colonnes = document.querySelectorAll('#index-masonry-grid .masonry-col');
+            if (!colonnes.length) return;
 
             const medias = [
-                { type: 'video', src: 'photos-albi/albi4.mp4', poster: 'photos-albi/albi1.jpg' },
-                { type: 'img', src: 'photos_commissaire/header 1.jpg', alt: 'Aperçu' },
-                { type: 'img', src: 'photos-albi/albi1.jpg', alt: 'Aperçu' },
-                { type: 'img', src: 'photos_commissaire/header 2.jpg', alt: 'Aperçu' },
-                { type: 'img', src: 'photos_arnos1/arnos1.jpg', alt: 'Arnos 1' },
-                { type: 'img', src: 'photos-motos/départ-fsbk.jpg', alt: 'Moto FSBK' }
+                { type: 'video', src: 'photos-albi/albi4.mp4', poster: 'photos-albi/albi1.jpg', aspectClass: 'aspect-[4/3]' },
+                { type: 'img', src: 'photos_commissaire/header 1.jpg', alt: 'Aperçu', aspectClass: 'aspect-[3/4]' },
+                { type: 'img', src: 'photos-albi/albi1.jpg', alt: 'Aperçu', aspectClass: 'aspect-square' },
+                { type: 'img', src: 'photos_commissaire/header 2.jpg', alt: 'Aperçu', aspectClass: 'aspect-[3/4]' },
+                { type: 'img', src: 'photos_arnos1/arnos1.jpg', alt: 'Arnos 1', aspectClass: 'aspect-[4/3]' },
+                { type: 'img', src: 'photos-motos/départ-fsbk.jpg', alt: 'Moto FSBK', aspectClass: 'aspect-[3/4]' }
             ];
 
-            grille.innerHTML = '';
-            melangerAleatoirement(medias).forEach(media => {
+            colonnes.forEach(col => { col.innerHTML = ''; });
+            melangerAleatoirement(medias).forEach((media, index) => {
                 const carte = document.createElement('div');
-                carte.className = 'w-full bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container aspect-[4/3]';
+                carte.className = `w-full bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container ${media.aspectClass}`;
                 carte.setAttribute('onclick', 'ouvrirMedia(this)');
 
                 if (media.type === 'video') {
@@ -511,12 +516,34 @@
                         <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
                     `;
                 }
-                grille.appendChild(carte);
+                colonnes[index % colonnes.length].appendChild(carte);
             });
         }
 
+        function isolerDefilementModale() {
+            const alertBox = document.getElementById('alert-box');
+            if (!alertBox) return;
+
+            alertBox.addEventListener('wheel', function(e) {
+                const scrollable = e.target.closest('.tab-content.active');
+                if (!scrollable) {
+                    e.preventDefault();
+                    return;
+                }
+
+                const deltaY = e.deltaY;
+                const atTop = scrollable.scrollTop <= 0 && deltaY < 0;
+                const atBottom = scrollable.scrollTop + scrollable.clientHeight >= scrollable.scrollHeight - 1 && deltaY > 0;
+
+                if (atTop || atBottom || scrollable.scrollHeight <= scrollable.clientHeight) {
+                    e.preventDefault();
+                }
+            }, { passive: false });
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
-            initialiserApercuAleatoire();
+            initialiserApercuMasonryAleatoire();
+            isolerDefilementModale();
 
             const slides = document.querySelectorAll('.hero-slide');
             let currentSlide = 0;
@@ -580,11 +607,13 @@
                 btnPhoto.className = "pb-2 text-gray-500 border-b-2 border-transparent hover:text-white transition-colors focus:outline-none";
                 contentDesc.classList.add('active');
                 contentPhoto.classList.remove('active');
+                contentDesc.scrollTop = 0;
             } else {
                 btnPhoto.className = "pb-2 text-red-500 border-b-2 border-red-500 hover:text-white transition-colors focus:outline-none";
                 btnDesc.className = "pb-2 text-gray-500 border-b-2 border-transparent hover:text-white transition-colors focus:outline-none";
                 contentPhoto.classList.add('active');
                 contentDesc.classList.remove('active');
+                contentPhoto.scrollTop = 0;
             }
         }
 
@@ -592,7 +621,7 @@
         let indexMediaActuel = 0;
 
         function ouvrirMedia(element) {
-            const grille = element.closest('#index-gallery-grid') || element.closest('.grid') || element.closest('.flex');
+            const grille = element.closest('#index-masonry-grid') || element.closest('.grid') || element.closest('.flex');
             const mediaNodes = grille.querySelectorAll('.media-element');
             
             galerieActuelle = Array.from(mediaNodes).map(node => {
