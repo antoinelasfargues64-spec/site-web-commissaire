@@ -9,19 +9,6 @@
     <script>
         if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
         window.scrollTo(0, 0);
-
-        function gererErreurFsbk(img) {
-            if (!img.dataset.fallbackStep) {
-                img.dataset.fallbackStep = '1';
-                img.src = 'photos-motos/d%C3%A9part-fsbk.jpg';
-            } else if (img.dataset.fallbackStep === '1') {
-                img.dataset.fallbackStep = '2';
-                img.src = 'photos-motos/depart-fsbk.jpg';
-            } else if (img.dataset.fallbackStep === '2') {
-                img.dataset.fallbackStep = '3';
-                img.src = 'photos-motos/d%C3%A9part-fsbk.JPG';
-            }
-        }
     </script>
     <style>
         :root {
@@ -171,7 +158,7 @@
         </a>
     </header>
 
-    <!-- SECTION APERÇU GALERIE (MASONRY CENTRÉ ALÉATOIRE AU RECHARGEMENT) -->
+    <!-- SECTION APERÇU GALERIE -->
     <section id="gallery-preview" class="pt-24 pb-12 px-4 sm:px-8 max-w-5xl mx-auto relative z-10 border-b border-gray-900 overflow-hidden">
         <div class="mb-12 relative flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div class="relative pt-10">
@@ -184,10 +171,38 @@
             </a>
         </div>
 
-        <div id="masonry-preview-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 w-full items-start">
-            <div class="masonry-col flex flex-col gap-4 md:gap-6 w-full"></div>
-            <div class="masonry-col flex flex-col gap-4 md:gap-6 w-full"></div>
-            <div class="masonry-col flex flex-col gap-4 md:gap-6 w-full"></div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 w-full">
+            <div class="w-full bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container aspect-[4/3]" onclick="ouvrirMedia(this)">
+                <video preload="metadata" poster="photos-albi/albi1.jpg" autoplay loop muted playsinline class="media-element pointer-events-none group-hover:scale-105 transition-transform duration-700 ease-in-out">
+                    <source src="photos-albi/albi4.mp4" type="video/mp4">
+                </video>
+                <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
+            </div>
+
+            <div class="w-full bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container aspect-[4/3]" onclick="ouvrirMedia(this)">
+                <img src="photos_arnos1/arnos1.jpg" alt="Arnos 1" class="media-element group-hover:scale-105 transition-transform duration-700 ease-in-out">
+                <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
+            </div>
+
+            <div class="w-full bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container aspect-[4/3]" onclick="ouvrirMedia(this)">
+                <img src="photos-albi/albi1.jpg" alt="Aperçu Albi" class="media-element group-hover:scale-105 transition-transform duration-700 ease-in-out">
+                <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
+            </div>
+
+            <div class="w-full bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container aspect-[4/3]" onclick="ouvrirMedia(this)">
+                <img src="photos_commissaire/header 2.jpg" alt="Aperçu" class="media-element group-hover:scale-105 transition-transform duration-700 ease-in-out">
+                <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
+            </div>
+            
+            <div class="w-full bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container aspect-[4/3]" onclick="ouvrirMedia(this)">
+                <img src="photos-albi/albi2.jpg" alt="Aperçu" class="media-element group-hover:scale-105 transition-transform duration-700 ease-in-out">
+                <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
+            </div>
+
+            <div class="w-full bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container aspect-[4/3]" onclick="ouvrirMedia(this)">
+                <img src="photos-motos/départ-fsbk.jpg" alt="Moto FSBK" class="media-element group-hover:scale-105 transition-transform duration-700 ease-in-out">
+                <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
+            </div>
         </div>
     </section>
 
@@ -488,89 +503,7 @@
     </section>
 
     <script>
-        function melangerAleatoirement(liste) {
-            const copie = [...liste];
-            for (let i = copie.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [copie[i], copie[j]] = [copie[j], copie[i]];
-            }
-            return copie;
-        }
-
-        function initialiserApercuMasonryAleatoire() {
-            const colonnes = document.querySelectorAll('#masonry-preview-grid .masonry-col');
-            if (!colonnes.length) return;
-
-            const mediasApercu = [
-                {
-                    type: 'video',
-                    src: 'photos-albi/albi4.mp4',
-                    poster: 'photos-albi/albi1.jpg',
-                    aspectClass: 'aspect-[4/3]'
-                },
-                {
-                    type: 'img',
-                    src: 'photos_commissaire/header 1.jpg',
-                    alt: 'Aperçu action en piste',
-                    aspectClass: 'aspect-[3/4]'
-                },
-                {
-                    type: 'img',
-                    src: 'photos-albi/albi1.jpg',
-                    alt: 'Aperçu Albi 1',
-                    aspectClass: 'aspect-square'
-                },
-                {
-                    type: 'img',
-                    src: 'photos_commissaire/header 2.jpg',
-                    alt: 'Aperçu drapeau',
-                    aspectClass: 'aspect-[3/4]'
-                },
-                {
-                    type: 'img',
-                    src: 'photos-albi/albi2.jpg',
-                    alt: 'Aperçu Albi 2',
-                    aspectClass: 'aspect-[4/3]'
-                },
-                {
-                    type: 'img',
-                    src: 'photos-motos/départ-fsbk.jpg',
-                    alt: 'Départ FSBK - Moto',
-                    aspectClass: 'aspect-[3/4]',
-                    isFsbk: true
-                }
-            ];
-
-            const mediasMelanges = melangerAleatoirement(mediasApercu);
-            colonnes.forEach(col => { col.innerHTML = ''; });
-
-            mediasMelanges.forEach((media, index) => {
-                const carte = document.createElement('div');
-                carte.className = `w-full bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container ${media.aspectClass}`;
-                carte.setAttribute('onclick', 'ouvrirMedia(this)');
-
-                if (media.type === 'video') {
-                    carte.innerHTML = `
-                        <video preload="metadata" poster="${media.poster}" autoplay loop muted playsinline class="media-element pointer-events-none group-hover:scale-105 transition-transform duration-700 ease-in-out">
-                            <source src="${media.src}" type="video/mp4">
-                        </video>
-                        <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
-                    `;
-                } else {
-                    const fallbackAttr = media.isFsbk ? ' onerror="gererErreurFsbk(this)"' : '';
-                    carte.innerHTML = `
-                        <img src="${media.src}"${fallbackAttr} alt="${media.alt}" class="media-element group-hover:scale-105 transition-transform duration-700 ease-in-out">
-                        <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
-                    `;
-                }
-
-                colonnes[index % colonnes.length].appendChild(carte);
-            });
-        }
-
         document.addEventListener('DOMContentLoaded', () => {
-            initialiserApercuMasonryAleatoire();
-
             const slides = document.querySelectorAll('.hero-slide');
             let currentSlide = 0;
             if (slides.length > 1) {
@@ -645,8 +578,8 @@
         let indexMediaActuel = 0;
 
         function ouvrirMedia(element) {
-            const conteneurParent = element.closest('#masonry-preview-grid') || element.closest('.grid') || element.closest('.flex');
-            const mediaNodes = conteneurParent.querySelectorAll('.media-element');
+            const grille = element.closest('.grid') || element.closest('.flex');
+            const mediaNodes = grille.querySelectorAll('.media-element');
             
             galerieActuelle = Array.from(mediaNodes).map(node => {
                 if (node.tagName.toLowerCase() === 'video') return { type: 'video', src: node.querySelector('source').src };
@@ -818,7 +751,7 @@
                 contentPhoto.innerHTML = `
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div class="bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-lg media-container aspect-[4/3]" onclick="ouvrirMedia(this)">
-                            <img src="photos-motos/départ-fsbk.jpg" onerror="gererErreurFsbk(this)" alt="Départ FSBK" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 media-element">
+                            <img src="photos-motos/départ-fsbk.jpg" alt="Départ FSBK" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 media-element">
                             <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
                         </div>
                     </div>
@@ -852,7 +785,16 @@
                         <img src="map_circuits/Pau-Arnos.png" alt="Tracé Pau-Arnos" class="w-full max-w-sm object-contain">
                     </div>
                 `;
-                contentPhoto.innerHTML = `<div class="text-center py-20 bg-[#161616] border border-gray-800"><span class="text-5xl mb-4 block">📸</span><p class="text-gray-400 font-bold uppercase">Galerie en préparation</p></div>`;
+                contentPhoto.innerHTML = `
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-lg media-container aspect-[4/3]" onclick="ouvrirMedia(this)">
+                            <video preload="metadata" autoplay loop muted playsinline class="w-full h-full object-cover media-element pointer-events-none group-hover:scale-105 transition-transform duration-700 ease-in-out">
+                                <source src="photos_arnos1/arnos16.mp4" type="video/mp4">
+                            </video>
+                            <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
+                        </div>
+                    </div>
+                `;
             }
             else if (nomEvent === 'trophee_arnos') {
                 contentDesc.innerHTML = `
