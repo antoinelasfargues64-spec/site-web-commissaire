@@ -24,6 +24,7 @@
             font-family: 'Inter', sans-serif; 
             background-color: var(--dark-bg); 
             color: #f3f4f6; 
+            overflow-x: hidden; 
             background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
             linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
             background-size: 30px 30px;
@@ -157,7 +158,7 @@
         </a>
     </header>
 
-    <!-- SECTION APERÇU GALERIE (MASONRY) -->
+    <!-- SECTION APERÇU GALERIE (EFFET MASONRY) -->
     <section id="gallery-preview" class="pt-24 pb-12 px-4 sm:px-8 max-w-5xl mx-auto relative z-10 border-b border-gray-900 overflow-hidden">
         <div class="mb-12 relative flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div class="relative pt-10">
@@ -181,20 +182,20 @@
                 </div>
 
                 <div class="w-full aspect-[3/4] bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container" onclick="ouvrirMedia(this)">
-                    <img src="photos_commissaire/header 2.jpg" alt="Drapeau" class="media-element group-hover:scale-105 transition-transform duration-700 ease-in-out">
+                    <img src="photos_commissaire/header 2.jpg" alt="Aperçu drapeau" class="media-element group-hover:scale-105 transition-transform duration-700 ease-in-out">
                     <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
                 </div>
             </div>
 
-            <!-- Colonne 2 -->
-            <div class="flex flex-col gap-4 md:gap-6 w-full">
+            <!-- Colonne 2 (décalée en quinconce) -->
+            <div class="flex flex-col gap-4 md:gap-6 w-full lg:mt-8">
                 <div class="w-full aspect-[3/4] bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container" onclick="ouvrirMedia(this)">
-                    <img src="photos_commissaire/header 1.jpg" alt="Action en piste" class="media-element group-hover:scale-105 transition-transform duration-700 ease-in-out">
+                    <img src="photos_commissaire/header 1.jpg" alt="Aperçu action" class="media-element group-hover:scale-105 transition-transform duration-700 ease-in-out">
                     <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
                 </div>
 
                 <div class="w-full aspect-[4/3] bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container" onclick="ouvrirMedia(this)">
-                    <img src="photos-albi/albi2.jpg" alt="Albi 2" class="media-element group-hover:scale-105 transition-transform duration-700 ease-in-out">
+                    <img src="photos-albi/albi2.jpg" alt="Aperçu Albi 2" class="media-element group-hover:scale-105 transition-transform duration-700 ease-in-out">
                     <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
                 </div>
             </div>
@@ -202,12 +203,12 @@
             <!-- Colonne 3 -->
             <div class="flex flex-col gap-4 md:gap-6 w-full">
                 <div class="w-full aspect-square bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container" onclick="ouvrirMedia(this)">
-                    <img src="photos-albi/albi1.jpg" alt="Albi 1" class="media-element group-hover:scale-105 transition-transform duration-700 ease-in-out">
+                    <img src="photos-albi/albi1.jpg" alt="Aperçu Albi 1" class="media-element group-hover:scale-105 transition-transform duration-700 ease-in-out">
                     <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
                 </div>
 
                 <div class="w-full aspect-[3/4] bg-[#161616] overflow-hidden rounded-2xl border border-gray-800 relative group cursor-pointer shadow-xl media-container" onclick="ouvrirMedia(this)">
-                    <img src="photos-motos/départ-fsbk.jpg" alt="Départ FSBK" class="media-element group-hover:scale-105 transition-transform duration-700 ease-in-out">
+                    <img src="photos-motos/départ-fsbk.jpg" alt="Moto FSBK" class="media-element group-hover:scale-105 transition-transform duration-700 ease-in-out">
                     <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
                 </div>
             </div>
